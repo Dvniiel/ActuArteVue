@@ -1,0 +1,281 @@
+
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
+
+
+
+<template>
+    <header class="header">
+        <a href="index.html" class="header__logo"><img src="../assets/img/LogoSinFondo.png" class="header__logo-image"></a>
+        <a href="index.html" class="header__logo-icon"><img src="../assets/img/LogoIconoSinFondo.png"
+                class="header__logo-icon-image"></a>
+
+        <ul class="header__navbar">
+            <RouterLink to="/" class="header__nav-item header__nav-item--active" id="sectionHead">Inicio</RouterLink>
+            <RouterLink to="/obras" class="header__nav-item" id="sectionHead">Obras</RouterLink>
+            <RouterLink to="/reservas" class="header__nav-item" id="sectionHead">Reservas</RouterLink>
+        </ul>
+
+        <div class="header__main">
+            <a href="#" class="header__ticket" id="sectionHead"><i class="ri-coupon-3-fill"></i>Entradas</a>
+            <a href="#" class="header__user" id="sectionHead"><i class="ri-user-line"></i>Cuenta</a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+    <br> <br> <br>
+    <div class="scroll"></div>
+</template>
+
+
+
+
+
+
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+:root {
+    --primary-color: #c7a17a;
+    --background-color: #f9f5f0;
+    --dark-color: #63595c;
+    --bg-color: #716A5C;
+    --text-color: #F1E9DB;
+    --main-color: #f1d791;
+    --btn-color: #5e0a0f;
+    --box-shadow: 0 2rem 3rem var(--dark-color);
+}
+
+/*SCROOLBAR*/
+body {
+    background-color: #C2BAAA;
+    font-family: "Poppins", sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 20px;
+    border: 1px solid var(--dark-color);
+}
+
+.header__logo-image {
+    width: 30%;
+}
+
+body {
+    min-height: 100vh;
+    list-style: none;
+    text-decoration: none;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-color);
+    padding: 28px 12%;
+    transition: all 0.5s ease;
+    font-size: 1.3rem;
+}
+
+/* -------------------------------------IZQUIERDA------------------------------------- */
+.header__logo {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo-icon-image {
+    display: none;
+}
+
+.header__navbar {
+    display: flex;
+}
+
+.header__nav-item {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 5px 0;
+    margin: 0 30px;
+    transition: all 0.5s ease;
+}
+
+.header__nav-item:hover {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.header__nav-item--active {
+    color: var(--main-color);
+}
+
+/* -------------------------------------DERECHA------------------------------------- */
+.header__main {
+    display: flex;
+    align-items: center;
+}
+
+.header__main a {
+    margin-right: 25px;
+    margin-left: 10px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: all 0.5s ease;
+}
+
+.header__user {
+    display: flex;
+    align-items: center;
+}
+
+.header__user i {
+    color: var(--main-color);
+    font-size: 28px;
+    margin-right: 7px;
+}
+
+.header__main a:hover {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+#menu-icon {
+    font-size: 35px;
+    color: var(--text-color);
+    cursor: pointer;
+    z-index: 10001;
+    display: none;
+}
+
+.scroll {
+    height: 100px;
+}
+
+.landing {
+    width: 100%;
+    z-index: 1;
+}
+
+/* ------------------------------------- MEDIA QUERY HEADER ------------------------------------- */
+@media (max-width: 1280px) {
+    .header {
+        padding: 14px 2%;
+        transition: 0.2s;
+    }
+
+    .header__nav-item {
+        padding: 5px 0;
+        margin: 0px 20px;
+    }
+}
+
+@media (max-width: 1090px) {
+    #menu-icon {
+        display: block;
+    }
+
+    .header__navbar {
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 270px;
+        height: 29vh;
+        background: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border-radius: 10px;
+        transition: all 0.5s ease;
+    }
+
+    .header__nav-item {
+        display: block;
+        margin: 12px 0;
+        padding: 0px 25px;
+        transition: all 0.5s ease;
+        color: var(--bg-color);
+    }
+
+    .header__nav-item--active {
+        color: var(--bg-color);
+    }
+
+    .header__nav-item:hover {
+        color: var(--bg-color);
+        transform: translateY(5px);
+    }
+
+    .header__nav-item:active {
+        color: var(--bg-color);
+    }
+
+    .header__navbar.open {
+        right: 2%;
+    }
+
+    .reservar-asientos__imagen img {
+        height: 100%;
+    }
+}
+
+@media (min-width: 0) {
+    .reservar-asientos__imagen {
+        height: 100%;
+    }
+}
+
+@media (max-width: 1591) {
+    .reservar-asientos__imagen {
+        height: 100%;
+    }
+}
+
+@media (max-width: 950px) {
+    .reservar-asientos__imagen {
+        display: none;
+        display: none;
+    }
+
+    .header__logo-image {
+        display: none;
+    }
+
+    .header__logo-icon-image {
+        display: flex;
+        width: 30%;
+    }
+}
+</style>
+
+
+
+
+
+
+
+
+
