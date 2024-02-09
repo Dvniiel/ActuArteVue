@@ -40,19 +40,19 @@ const obras = [
   <h1 class="obras__title">Nuevas obras</h1>
   <section class="obras-index">
     <div class="obra" v-for="obra in obras" :key="obra.id" :title="obra.title" :image="obra.image">
-    
-    <div class="container-img">
-      <img :src="obra.image" :alt="title" class="img-item" />
-    </div>
 
-    <div class="content-card-obra">
-      <h3 class="content-card-obra__title">{{ obra.title }}</h3>
-      <RouterLink to="/obras" class="obras-button content-card-obra__button">Ver Más</RouterLink>
-    </div>
+      <div class="container-img">
+        <img :src="obra.image" :alt="title" class="img-item" />
+      </div>
 
-  </div>
+      <div class="content-card-obra">
+        <h3 class="content-card-obra__title">{{ obra.title }}</h3>
+        <RouterLink to="/obras" class="obras-button content-card-obra__button">Ver Más</RouterLink>
+      </div>
+
+    </div>
   </section>
-  
+
   <br><br><br>
 
 
@@ -307,14 +307,14 @@ body::-webkit-scrollbar-thumb {
    * #OBRAS
 \*-----------------------------------*/
 
-.obras-index{
+.obras-index {
   display: flex;
   justify-content: space-around;
 }
 
 .obra {
   display: grid;
-  text-align: center; 
+  text-align: center;
   gap: 3rem;
   width: 33%;
   background-color: var(--text-color);
@@ -333,46 +333,72 @@ body::-webkit-scrollbar-thumb {
 }
 
 .container-img img {
-  width: 100%;
+  width: 70%;
 }
 
 
 
-.content-card-obra {
-  display: grid;
-  justify-items: center;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, min-content);
-  row-gap: 1rem;
+.container-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 3rem;
+    width: 100%;
 }
 
-.content-card-obra__title {
-  grid-row: 1/1;
-  grid-column: 1/-1;
-  font-weight: 400;
-  font-size: 1.6rem;
+.card-product {
+    background-color: var(--text-color);
+    padding: 2rem 3rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.obras-button,
-.content-card-obra__button {
-  background-color: var(--dark-color);
-  border: none;
-  border-radius: 30px;
-  padding: 14px 35px;
-  color: white;
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  grid-row: 1/1;
-  grid-column: 1/-1;
+.container-img {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.obras-button:hover,
-.content-card-obra__button:hover {
-  background-color: var(--btn-color);
-  color: #ffffff;
-  box-shadow: var(--box-shadow);
+.container-img img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
 }
+
+.content-card-product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-card-product h3 {
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+}
+
+.obras-button {
+    background-color: var(--dark-color);
+    border: none;
+    border-radius: 30px;
+    padding: 14px 35px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: fit-content;
+}
+
+.obras-button:hover {
+    background-color: var(--btn-color);
+    color: #ffffff;
+    box-shadow: var(--box-shadow);
+}
+
 
 /*-----------------------------------*\
    * #RESERVAR ASIENTOS
@@ -556,4 +582,5 @@ body::-webkit-scrollbar-thumb {
   top: 0;
   bottom: 0;
   transition: all 0.35s;
-}</style>
+}
+</style>

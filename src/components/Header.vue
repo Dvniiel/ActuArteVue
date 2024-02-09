@@ -23,7 +23,7 @@ import { RouterLink } from 'vue-router'
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>
-    <br> <br> <br>
+    <div class="header-placeholder"></div> <!-- Este es el marcador de posición -->
     <div class="scroll"></div>
 </template>
 
@@ -86,11 +86,9 @@ body {
 }
 
 .header {
-    position: fixed;
     width: 100%;
     top: 0;
     right: 0;
-    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -98,6 +96,17 @@ body {
     padding: 28px 12%;
     transition: all 0.5s ease;
     font-size: 1.3rem;
+}
+
+
+.header-placeholder {
+    height: 70px; /* Ajusta esto al alto de tu header */
+}
+
+.main-content {
+    padding-top: 70px; /* Esto debe coincidir con la altura de tu header */
+    background-color: #C2BAAA;
+    /* Resto de tus estilos... */
 }
 
 /* -------------------------------------IZQUIERDA------------------------------------- */
