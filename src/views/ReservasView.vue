@@ -1,9 +1,72 @@
+<script lang="ts">
+import { defineComponent, reactive } from 'vue';
+
+interface Seat {
+    row: number;
+    col: number;
+    color: string;
+}
+
+export default defineComponent({
+    name: 'SeatMap',
+    setup() {
+        const rows = Array.from({ length: 6 }, (_, i) => i + 1);
+        const cols = Array.from({ length: 9 }, (_, i) => i + 1);
+        const defaultColor = '#9E9E9E';
+        const selectedColor = '#f1d791';
+
+        // Estructura de datos para mantener el estado de cada asiento
+        const seats = reactive<Record<string, Seat>>({});
+
+        // Inicializa todos los asientos con el color por defecto
+        rows.forEach(row => {
+            cols.forEach(col => {
+                const key = `row${row}col${col}`;
+                seats[key] = { row, col, color: defaultColor };
+            });
+        });
+
+        const getCircleX = (col: number): number => col * 10;
+        const getCircleY = (row: number): number => row * 10;
+
+        const getSeatColor = ({ row, col }: { row: number; col: number }): string => {
+            const key = `row${row}col${col}`;
+            return seats[key].color;
+        };
+
+        const toggleSeatColor = ({ row, col }: { row: number; col: number }): void => {
+            const key = `row${row}col${col}`;
+            seats[key].color = seats[key].color === defaultColor ? selectedColor : defaultColor;
+        };
+
+        return {
+            rows,
+            cols,
+            getCircleX,
+            getCircleY,
+            getSeatColor,
+            toggleSeatColor,
+        };
+    },
+});
+</script>
+
 <template>
-    <a href="./index.html"><button class="reservar-obra_button">Volver a Inicio</button></a>
+    <div class="top"></div>
+
+    <button class="reservar-obra_button">
+        <RouterLink to="/" class="Router__Index">Volver al Inicio</RouterLink>
+    </button>
+
+
+
 
     <div class="movie-container">
         <div id="obraTitulo"></div>
     </div>
+
+
+
 
 
     <ul class="showcase">
@@ -21,19 +84,33 @@
         </li>
     </ul>
 
-    <div class="container" id="seatContainer">
-        <!-- Los asientos se agregarán aquí dinámicamente -->
+
+
+
+
+    <div class="container">
+        <svg width="50%" height="100%" viewBox="0 0 100 65" preserveAspectRatio="xMidYMid meet">
+            <g v-for="row in rows" :key="row">
+                <circle v-for="col in cols" :key="col" :cx="getCircleX(col)" :cy="getCircleY(row)" r="2"
+                    :fill="getSeatColor({ row, col })" @click="toggleSeatColor({ row, col })" />
+            </g>
+        </svg>
     </div>
 
     <br>
 
+
+
+
     <a href="#"><button id="reserve-button" class="reservar-obra_button">Reservar</button></a>
 
     <br>
+
+
+
     <p class="text">
         Has seleccionado <span id="count">0</span> asientos por un precio de <span id="total">0$</span>
     </p>
-
 </template>
 
 
@@ -44,7 +121,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
     list-style: none;
+    font-family: "Poppins", sans-serif;
 }
 
 :root {
@@ -64,8 +143,6 @@ body {
     display: flex;
     flex-direction: column;
     color: #fff;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     font-family: "Poppins", sans-serif;
 }
@@ -84,6 +161,20 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid var(--dark-color);
 }
 
+
+.top {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
 .seat {
     background-color: var(--bg-color);
     height: 12px;
@@ -95,22 +186,6 @@ body::-webkit-scrollbar-thumb {
     border-bottom-right-radius: 10px;
 }
 
-.row {
-    display: flex;
-}
-
-.movie-container {
-    margin: 20px 0;
-}
-
-.movie-container select {
-    background-color: var(--text-color);
-    border-radius: 0;
-    border: 0;
-    font-size: 14px;
-    margin-left: 10px;
-    padding: 5px 15px 5px 15px;
-}
 
 .seat.selected {
     background-color: var(--main-color);
@@ -120,32 +195,20 @@ body::-webkit-scrollbar-thumb {
     background-color: var(--btn-color);
 }
 
-.seat:nth-of-type(6) {
-    margin-right: 18px;
-}
-
-.seat:nth-last-of-type(6) {
-    margin-left: 18px;
-}
-
-.seat:not(.occupied):hover {
-    cursor: pointer;
-    transform: scale(1.2);
-}
 
 .showcase {
-    box-shadow: var(--box-shadow);
-    margin-bottom: 40px;
+    font-size: 20px;
+    width: 50%;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
     padding: 5px 40px;
+    margin: 0 auto 10px;
+    box-shadow: var(--box-shadow);
     border-radius: 5px;
     color: var(--dark-color);
-    display: flex;
-    justify-content: space-between;
-}
-
-.showcase .seat:not(.occupied):hover {
-    cursor: default;
-    transform: scale(1);
 }
 
 .showcase li {
@@ -155,35 +218,16 @@ body::-webkit-scrollbar-thumb {
     margin: 0 10px;
 }
 
+/* Estilo para los textos pequeños en la guía de colores */
 .showcase li small {
     margin-left: 10px;
 }
 
-.screen {
-    background-color: var(--text-color);
-    border-radius: 10%;
-    height: 70px;
-    width: 100%;
-    margin: 15px 0;
-    transform: rotateX(-45deg);
-    box-shadow: var(--box-shadow);
-}
-
-.container {
-    perspective: 1000px;
-    margin-bottom: 30px;
-}
-
-.p.text {
-    margin: 5px 0;
-}
-
-.p.text span {
-    color: var(--btn-color);
-}
-
 .reservar-obra_button {
-    background-color: var(--dark-color);
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: #000;
     border: none;
     border-radius: 30px;
     padding: 14px 35px;
@@ -191,15 +235,34 @@ body::-webkit-scrollbar-thumb {
     font-size: 20px;
     font-weight: 600;
     cursor: pointer;
-    grid-row: 2/2;
-    grid-column: 1/-1;
-
+    margin: 20px auto;
 }
+
+.text{
+    text-align: center;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#count,
+#total{
+    color: var(--main-color);
+}
+
 
 .reservar-obra_button:hover {
-    background-color: var(--btn-color);
-    color: #ffffff;
-    box-shadow: var(--box-shadow);
+    background-color: var(--main-color);
+    color: #000;
 }
 
-/*# sourceMappingURL=reservas.css.map */</style>
+.Router__Index{
+    color: #fff;
+}
+
+.Router__Index:hover{
+    color: #000;
+}
+
+</style>

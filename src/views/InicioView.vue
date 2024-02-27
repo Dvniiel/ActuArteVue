@@ -232,7 +232,7 @@ body::-webkit-scrollbar-thumb {
    * #CARRUSEL
 \*-----------------------------------*/
 .container-slider {
-  margin-top: 1750px;
+  margin-top: 1300px;
   width: 100%;
   padding: 2rem;
 }

@@ -1,15 +1,113 @@
-
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+
+import { onMounted, onUnmounted, ref, reactive } from 'vue';
+import { RouterLink } from 'vue-router';
+
+const canvas = ref<HTMLCanvasElement | null>(null);
+let requestId: number | null = null;
+
+
+// CONFIGURACIÓN PARA LA ESTRELLA
+const starConfig = reactive({
+  cx: 0,
+  cy: 0,
+  spikes: 6, // NUMERO DE PUNTAS
+  outerRadius: 20,
+  innerRadius: 6,
+  color: 'yellow'
+});
+
+const isMouseOverStar = (mouseX: number, mouseY: number) => {
+  const dx = mouseX - starConfig.cx;
+  const dy = mouseY - starConfig.cy;
+  const distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
+  return distanceFromCenter < starConfig.outerRadius;
+};
+
+const canvasMousemove = (event: MouseEvent) => {
+  if (!canvas.value) return;
+
+  const rect = canvas.value.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+  starConfig.color = isMouseOverStar(mouseX, mouseY) ? 'orange' : 'yellow';
+};
+
+const drawStar = (ctx: CanvasRenderingContext2D) => {
+  const { cx, cy, spikes, outerRadius, innerRadius } = starConfig;
+  let rot = Math.PI / 2 * 3;
+  let x = cx;
+  let y = cy;
+  let step = Math.PI / spikes;
+
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - outerRadius);
+  for (let i = 0; i < spikes; i++) {
+    x = cx + Math.cos(rot) * outerRadius;
+    y = cy + Math.sin(rot) * outerRadius;
+    ctx.lineTo(x, y);
+    rot += step;
+
+    x = cx + Math.cos(rot) * innerRadius;
+    y = cy + Math.sin(rot) * innerRadius;
+    ctx.lineTo(x, y);
+    rot += step;
+  }
+  ctx.lineTo(cx, cy - outerRadius);
+  ctx.closePath();
+  ctx.fillStyle = starConfig.color;
+  ctx.fill();
+};
+
+const animate = () => {
+  if (canvas.value) {
+    const ctx = canvas.value.getContext('2d');
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
+      
+
+      // TEXTO "ACTUARTE"
+      ctx.font = "bold 40px Poppins";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "right";
+      ctx.fillText("ACTUARTE", canvas.value.width / 3 * 2, canvas.value.height / 2 + 15);
+
+      starConfig.cx = canvas.value.width / 3 - 60;
+      starConfig.cy = canvas.value.height / 2;
+
+      drawStar(ctx);
+    }
+  }
+  requestId = requestAnimationFrame(animate);
+};
+
+onMounted(() => {
+  starConfig.cx = 150; 
+  starConfig.cy = 50;
+
+  canvas.value?.addEventListener('mousemove', canvasMousemove);
+  requestId = requestAnimationFrame(animate);
+});
+
+onUnmounted(() => {
+  canvas.value?.removeEventListener('mousemove', canvasMousemove);
+  if (requestId) {
+    cancelAnimationFrame(requestId);
+  }
+});
 </script>
+
+
+
+
 
 
 
 <template>
     <header class="header">
-        <a href="index.html" class="header__logo"><img src="../assets/img/LogoSinFondo.png" class="header__logo-image"></a>
-        <a href="index.html" class="header__logo-icon"><img src="../assets/img/LogoIconoSinFondo.png"
-                class="header__logo-icon-image"></a>
+
+        <canvas ref="canvas" id="logoCanvas" width="640" height="100" class="header__logo-image"></canvas>
+        <a href="index.html" class="header__logo-icon"><img src="../assets/img/LogoIconoSinFondo.png" class="header__logo-icon-image"></a>
 
         <ul class="header__navbar">
             <RouterLink to="/" class="header__nav-item header__nav-item--active" id="sectionHead">Inicio</RouterLink>
@@ -19,7 +117,7 @@ import { RouterLink } from 'vue-router'
 
         <div class="header__main">
             <a href="#" class="header__ticket" id="sectionHead"><i class="ri-coupon-3-fill"></i>Entradas</a>
-            <a href="#" class="header__user" id="sectionHead"><i class="ri-user-line"></i>Cuenta</a>
+            <RouterLink to="/login" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta</RouterLink>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>
@@ -100,19 +198,19 @@ body {
 
 
 .header-placeholder {
-    height: 70px; /* Ajusta esto al alto de tu header */
+    height: 70px;
 }
 
 .main-content {
-    padding-top: 70px; /* Esto debe coincidir con la altura de tu header */
+    padding-top: 70px;
     background-color: #C2BAAA;
-    /* Resto de tus estilos... */
 }
 
 /* -------------------------------------IZQUIERDA------------------------------------- */
 .header__logo {
     display: flex;
     align-items: center;
+    border: 1px solid #000;
 }
 
 .header__logo-icon-image {

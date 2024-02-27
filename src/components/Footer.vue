@@ -22,7 +22,7 @@
                 teatroDigital@gmail.com
             </p>
             <br>
-            <RouterLink  to="/contacto" class="footer__button ov-btn-slide-left"> Contacto </RouterLink>
+            <RouterLink  to="/contacto" class="Router_Contact"> Contacto </RouterLink>
         </div>
     </footer>
 </template>
@@ -31,6 +31,7 @@
 
 
 <style>
+
 .footer {
     margin-top: 0px;
     width: 100%;
@@ -59,9 +60,6 @@
     letter-spacing: 10px;
 }
 
-.footer__col-1 a i:hover {
-    color: var(--btn-color);
-}
 
 .info-footer {
     margin-bottom: 20px;
@@ -73,42 +71,18 @@
     color: var(--main-color);
 }
 
-.ov-btn-slide-left {
-    background-color: #333;
+.Router_Contact{
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: #000;
     border: none;
     border-radius: 30px;
     padding: 14px 35px;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
 }
 
-.ov-btn-slide-left:hover {
-    background-color: var(--btn-color);
-    color: #ffffff;
-    box-shadow: var(--box-shadow);
-}
-
-.ov-btn-slide-left::after {
-    content: "";
-    background: var(--btn-color);
-    position: absolute;
-    z-index: -1;
-    padding: 16px 20px;
-    display: block;
-    top: 0;
-    bottom: 0;
-    left: -100%;
-    right: 100%;
-    transition: all 0.35s;
-}
-
-.ov-btn-slide-left:hover::after {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    transition: all 0.35s;
-}
 </style>

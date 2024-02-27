@@ -12,7 +12,7 @@ const obras = [
     { id: 4, title: 'La Vida es Sueño', image: 'https://www.elejandria.com/covers/La_vida_es_sueno-Calderon_de_la_Barca_Pedro-md.png' },
     { id: 5, title: 'Hamlet', image: 'https://cdn.kobo.com/book-images/5fc4252b-1c4f-40ef-9975-22982c94f12c/1200/1200/False/hamlet-prince-of-denmark-23.jpg' },
     { id: 6, title: 'El Fantasma de la Ópera', image: 'https://teatroaranjuez.es/wp-content/uploads/2023/10/el-fantasma-de-la-opera-330x467-1.jpg' },
-    { id: 7, title: 'Sueño de una Noche de Verano', image: 'https://image.isu.pub/190709204809-9c82f7fce8bb840f1ff3b5631eef637f/jpg/page_1.jpg' },
+    { id: 7, title: 'Sueño Noche de Verano', image: 'https://image.isu.pub/190709204809-9c82f7fce8bb840f1ff3b5631eef637f/jpg/page_1.jpg' },
     { id: 8, title: 'Don Juan Tenorio', image: 'https://m.media-amazon.com/images/I/61Er0I3cJaL._AC_UF1000,1000_QL80_.jpg' },
     { id: 9, title: 'Fuenteovejuna', image: 'https://m.media-amazon.com/images/I/418RabpIZVS.jpg' },
     { id: 10, title: 'La Divina Comedia', image: 'https://m.media-amazon.com/images/I/71WJbXGxPdL._AC_UF1000,1000_QL80_.jpg' },
@@ -52,7 +52,6 @@ onMounted(() => {
 
 
 <template>
-    
     <section class="container top-products">
         <br> <br> <br>
         <div class="container-options">
@@ -78,9 +77,7 @@ onMounted(() => {
             </div>
             <div class="content-card-product">
                 <h3 class="titulo-item">{{ obra.title }}</h3>
-                <a :href="`/detalles.html?titulo=${obra.title}`">
-                    <button class="obras-button">Detalles</button>
-                </a>
+                <button class="obras-button">Detalles</button>
             </div>
         </div>
     </div>
@@ -138,10 +135,6 @@ body::-webkit-scrollbar-thumb {
 \*-----------------------------------*/
 .header__logo-image {
     width: 30%;
-}
-
-body {
-    min-height: 100vh;
 }
 
 .header {
@@ -404,21 +397,27 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden; /* Esto asegura que nada se desborde del borde redondeado */
+    overflow: hidden;
+    /* Esto asegura que nada se desborde del borde redondeado */
 }
 
 .container-img {
     width: 100%;
-    height: 15rem; /* Establece un alto fijo para el contenedor de la imagen */
+    height: 15rem;
+    /* Establece un alto fijo para el contenedor de la imagen */
     display: flex;
     justify-content: center;
-    overflow: hidden; /* Agregar esto para manejar imágenes que sean más altas que el contenedor */
+    overflow: hidden;
+    /* Agregar esto para manejar imágenes que sean más altas que el contenedor */
 }
 
 .container-img img {
-    width: 100%; /* Establece un ancho fijo */
-    height: 100%; /* Establece un alto fijo */
-    object-fit: cover; /* Mantener la proporción de la imagen sin distorsionar */
+    width: 100%;
+    /* Establece un ancho fijo */
+    height: 100%;
+    /* Establece un alto fijo */
+    object-fit: cover;
+    /* Mantener la proporción de la imagen sin distorsionar */
 }
 
 .content-card-product {
@@ -543,7 +542,6 @@ body {
     transition: all 0.35s;
 }
 
-/*# sourceMappingURL=menu.css.map */
-</style>
+/*# sourceMappingURL=menu.css.map */</style>
 
 
