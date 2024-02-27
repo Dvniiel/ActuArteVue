@@ -382,77 +382,77 @@ body::-webkit-scrollbar-thumb {
 /*-----------------------------------*\
    * #OBRAS
 \*-----------------------------------*/
-.container-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 3rem;
-    width: 100%;
-}
+    .container-products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        gap: 3rem;
+        width: 100%;
+    }
 
-.card-product {
-    background-color: var(--text-color);
-    padding: 2rem 3rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--box-shadow);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    /* Esto asegura que nada se desborde del borde redondeado */
-}
+    .card-product {
+        background-color: var(--text-color);
+        padding: 2rem 3rem;
+        border-radius: 0.5rem;
+        box-shadow: var(--box-shadow);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        /* Esto asegura que nada se desborde del borde redondeado */
+    }
 
-.container-img {
-    width: 100%;
-    height: 15rem;
-    /* Establece un alto fijo para el contenedor de la imagen */
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    /* Agregar esto para manejar imágenes que sean más altas que el contenedor */
-}
+    .container-img {
+        width: 100%;
+        height: 15rem;
+        /* Establece un alto fijo para el contenedor de la imagen */
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        /* Agregar esto para manejar imágenes que sean más altas que el contenedor */
+    }
 
-.container-img img {
-    width: 100%;
-    /* Establece un ancho fijo */
-    height: 100%;
-    /* Establece un alto fijo */
-    object-fit: cover;
-    /* Mantener la proporción de la imagen sin distorsionar */
-}
+    .container-img img {
+        width: 100%;
+        /* Establece un ancho fijo */
+        height: 100%;
+        /* Establece un alto fijo */
+        object-fit: cover;
+        /* Mantener la proporción de la imagen sin distorsionar */
+    }
 
-.content-card-product {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .content-card-product {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.content-card-product h3 {
-    color: #000;
-    font-weight: 600;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 1rem;
-}
+    .content-card-product h3 {
+        color: #000;
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        margin-top: 1rem;
+    }
 
-.obras-button {
-    background-color: var(--dark-color);
-    border: none;
-    border-radius: 30px;
-    padding: 14px 35px;
-    color: white;
-    font-size: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 1rem;
-    width: fit-content;
-}
+    .obras-button {
+        background-color: var(--dark-color);
+        border: none;
+        border-radius: 30px;
+        padding: 14px 35px;
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1rem;
+        width: fit-content;
+    }
 
-.obras-button:hover {
-    background-color: var(--btn-color);
-    color: #ffffff;
-    box-shadow: var(--box-shadow);
-}
+    .obras-button:hover {
+        background-color: var(--btn-color);
+        color: #ffffff;
+        box-shadow: var(--box-shadow);
+    }
 
 /*-----------------------------------*\
    * #SEPARACION
