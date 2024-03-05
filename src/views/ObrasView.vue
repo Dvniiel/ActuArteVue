@@ -1,35 +1,17 @@
-<script  setup lang = "ts">
-defineProps<{
-    title?: string
-    image?: string
-}>();
+<script setup>
+import { onMounted } from 'vue';
+import { useObrasStore } from '@/store/ObrasStore';
+
+const obrasStore = useObrasStore();
+
+onMounted(() => {
+  obrasStore.fetchObras();
+});
 
 
-const obras = [
-    { id: 1, title: 'Romeo y Julieta', image: 'https://almeriaciudad.es/cultura/wp-content/archivos/sites/21/2022/02/IMG_2391-1.jpeg' },
-    { id: 2, title: 'La Casa de Bernarda Alba', image: 'https://chglenguayliteratura.files.wordpress.com/2020/01/aaaa.jpg' },
-    { id: 3, title: 'La Celestina', image: 'https://www.cervantesvirtual.com/s3/BVMC_OBRAS/ffa/c66/288/2b1/11d/fac/c70/021/85c/e60/64/mimes/imagenes/ffac6628-82b1-11df-acc7-002185ce6064_2.jpg' },
-    { id: 4, title: 'La Vida es Sueño', image: 'https://www.elejandria.com/covers/La_vida_es_sueno-Calderon_de_la_Barca_Pedro-md.png' },
-    { id: 5, title: 'Hamlet', image: 'https://cdn.kobo.com/book-images/5fc4252b-1c4f-40ef-9975-22982c94f12c/1200/1200/False/hamlet-prince-of-denmark-23.jpg' },
-    { id: 6, title: 'El Fantasma de la Ópera', image: 'https://teatroaranjuez.es/wp-content/uploads/2023/10/el-fantasma-de-la-opera-330x467-1.jpg' },
-    { id: 7, title: 'Sueño Noche de Verano', image: 'https://image.isu.pub/190709204809-9c82f7fce8bb840f1ff3b5631eef637f/jpg/page_1.jpg' },
-    { id: 8, title: 'Don Juan Tenorio', image: 'https://m.media-amazon.com/images/I/61Er0I3cJaL._AC_UF1000,1000_QL80_.jpg' },
-    { id: 9, title: 'Fuenteovejuna', image: 'https://m.media-amazon.com/images/I/418RabpIZVS.jpg' },
-    { id: 10, title: 'La Divina Comedia', image: 'https://m.media-amazon.com/images/I/71WJbXGxPdL._AC_UF1000,1000_QL80_.jpg' },
-    { id: 11, title: 'El enfermo imaginario', image: 'https://www.tarambana.net/upload/espectaculos/foto_poster-1296.jpg?id=117364' },
-    { id: 12, title: 'Cats', image: 'https://upload.wikimedia.org/wikipedia/en/3/30/Cats_1998_DVD_Cover.jpg' },
-    { id: 13, title: 'Wicked', image: 'https://m.media-amazon.com/images/M/MV5BNjczYjBhMTctYTA3Yy00NTgyLWFkZWQtZjQwYTRkMDc1YTc1XkEyXkFqcGdeQXVyNTk5NTQzNDI@._V1_.jpg' },
-    { id: 14, title: 'Los Miserables', image: 'https://m.media-amazon.com/images/I/517Cb2FS4qL.jpg' },
-    { id: 15, title: 'Casa de Muñecas', image: 'https://images.cdn3.buscalibre.com/fit-in/360x360/ef/99/ef9995dc7f336bc670c2775b7316b143.jpg' },
-    { id: 16, title: 'El alcalde de Zalamea', image: 'https://m.media-amazon.com/images/I/51fM26seM-L.jpg' },
-];
-
-
-
-
-import { onMounted, ref } from 'vue';
 
 // Crear referencias reactivas para los elementos del DOM.
+/*
 const arrow = ref<HTMLElement | null>(null);
 const arrowFinal = ref<HTMLElement | null>(null);
 
@@ -45,7 +27,7 @@ onMounted(() => {
         });
     }
 });
-
+*/
 </script>
 
 
@@ -71,16 +53,16 @@ onMounted(() => {
 
     <br><br><br><br>
     <div class="container-products" id="obras-container">
-        <div class="card-product" v-for="obra in obras" :key="obra.id">
-            <div class="container-img">
-                <img :src="obra.image" :alt="obra.title" class="img-item">
-            </div>
-            <div class="content-card-product">
-                <h3 class="titulo-item">{{ obra.title }}</h3>
-                <button class="obras-button">Detalles</button>
-            </div>
-        </div>
+    <div class="card-product" v-for="obra in obrasStore.obras" :key="obra.idObra">
+      <div class="container-img">
+        <img :src="obra.imagen" :alt="obra.nombreObra" class="img-item">
+      </div>
+      <div class="content-card-product">
+        <h3 class="titulo-item">{{ obra.nombreObra }}</h3>
+        <button class="obras-button">Detalles</button>
+      </div>
     </div>
+  </div>
     <br><br><br><br>
 </template>
 
@@ -544,4 +526,4 @@ body::-webkit-scrollbar-thumb {
 
 /*# sourceMappingURL=menu.css.map */</style>
 
-
+@/store/ObrasStore
