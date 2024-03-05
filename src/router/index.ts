@@ -46,6 +46,13 @@ const router = createRouter({
             component: DashboardView
         },
 
+
+        {
+            path: '/obras/:id',
+            name: 'Detalles',
+            component: () => import('../views/DetallesView.vue')
+        }
+
     ]
 })
 

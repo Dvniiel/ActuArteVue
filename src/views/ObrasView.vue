@@ -58,8 +58,9 @@ onMounted(() => {
         <img :src="obra.imagen" :alt="obra.nombreObra" class="img-item">
       </div>
       <div class="content-card-product">
+
         <h3 class="titulo-item">{{ obra.nombreObra }}</h3>
-        <button class="obras-button">Detalles</button>
+        <RouterLink :to="{ name: 'Detalles', params: { id: obra.idObra } }" class="obras-button">Detalles</RouterLink>
       </div>
     </div>
   </div>
