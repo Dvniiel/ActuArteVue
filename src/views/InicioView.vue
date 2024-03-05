@@ -1,15 +1,12 @@
-<script  setup lang = "ts">
-defineProps<{
-  title?: string
-  image?: string
-}>()
+<script setup>
+import { onMounted } from 'vue';
+import { useInicioStore } from '@/store/InicioStore';
 
+const inicioStore = useInicioStore();
 
-const obras = [
-  { title: 'Wicked', id: 1, image: 'https://m.media-amazon.com/images/M/MV5BNjczYjBhMTctYTA3Yy00NTgyLWFkZWQtZjQwYTRkMDc1YTc1XkEyXkFqcGdeQXVyNTk5NTQzNDI@._V1_.jpg' },
-  { title: 'La divina comedia', id: 2, image: 'https://m.media-amazon.com/images/I/71WJbXGxPdL._AC_UF1000,1000_QL80_.jpg' },
-  { title: 'la vida es sueño', id: 3, image: 'https://www.elejandria.com/covers/La_vida_es_sueno-Calderon_de_la_Barca_Pedro-md.png' }
-]
+onMounted(() => {
+  inicioStore.fetchObras();
+});
 </script>
 
 
@@ -39,14 +36,14 @@ const obras = [
   <!-- Obras -->
   <h1 class="obras__title">Nuevas obras</h1>
   <section class="obras-index">
-    <div class="obra" v-for="obra in obras" :key="obra.id" :title="obra.title" :image="obra.image">
+    <div class="obra" v-for="obra in inicioStore.obras" :key="obra.idObra" :title="obra.nombreObra" :image="obra.imagen">
 
       <div class="container-img">
-        <img :src="obra.image" :alt="title" class="img-item" />
+        <img :src="obra.imagen" :alt="nombreObra" class="img-item" />
       </div>
 
       <div class="content-card-obra">
-        <h3 class="content-card-obra__title">{{ obra.title }}</h3>
+        <h3 class="content-card-obra__title">{{ obra.nombreObra }}</h3>
         <RouterLink to="/obras" class="obras-button content-card-obra__button">Ver Más</RouterLink>
       </div>
 
@@ -307,6 +304,16 @@ body::-webkit-scrollbar-thumb {
    * #OBRAS
 \*-----------------------------------*/
 
+.obras__title {
+  font-size: 50px;
+  color: #000;
+  margin-bottom: 25px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+
 .obras-index {
   display: flex;
   justify-content: space-around;
@@ -323,11 +330,11 @@ body::-webkit-scrollbar-thumb {
   box-shadow: var(--box-shadow);
 }
 
-.obras__title {
+.content-card-obra__title {
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 50px;
+  font-size: 20px;
   color: #000;
   margin-bottom: 55px;
 }
