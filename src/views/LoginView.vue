@@ -16,7 +16,6 @@
                 <RouterLink to="/dashboard" class="submit" id="sectionHead">Entrar</RouterLink>
             </form>
         </div>
-
     </body>
 </template>
 
