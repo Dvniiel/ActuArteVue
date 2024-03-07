@@ -79,7 +79,7 @@ onMounted(() => {
               quisquam
               illo sunt nemo saepe perspiciatis eos iste fugit est. Quasi commodi eius iste cupiditate!
             </p>
-            <a href="reservas.html"><button class="reservar-asientos__button">Reservar</button></a>
+            <RouterLink to="/obras" class="reservar-asientos__button">Reservar</RouterLink>
           </div>
         </section>
       </div>
