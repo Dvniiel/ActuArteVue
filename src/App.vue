@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView, useRoute } from 'vue-router';
 
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 
-
+const route = useRoute();
 </script>
 
 
@@ -15,7 +15,7 @@ import Footer from '@/components/Footer.vue'
 
 
   <!-- CABECERA -->
-  <Header></Header>
+  <Header v-if="route.path !== '/dashboard'"></Header>
 
 
   <main>
@@ -26,7 +26,7 @@ import Footer from '@/components/Footer.vue'
 
 
   <!-- FOOTER -->
-  <Footer></Footer>
+  <Footer v-if="route.path !== '/dashboard'"></Footer>
 
 
 

@@ -55,9 +55,27 @@ function handleCancel() {
 <template>
   <div class="container-dashboard">
     <main>
-      <button @click="handleAdd" class="btn-añadir-obras">Añadir Obra</button>
       <div class="recent_order">
-        <h1>Listado de Obras</h1>
+        <div class="botones-funciones-dashboard">
+
+          <button @click="handleAdd" class="btn-añadir-obras">
+            Añadir Obra
+          </button>
+
+
+          <button class="Btn">
+            <div class="sign">
+              <svg viewBox="0 0 512 512">
+                <path
+                  d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                ></path>
+              </svg>
+            </div>
+
+            <div class="text">Logout<RouterLink to="/">Salir</RouterLink></div>
+          </button>
+          
+        </div>
         <table>
           <thead>
             <tr>
@@ -130,29 +148,27 @@ function handleCancel() {
             placeholder="Duración de la obra"
             required
           />
-          <button type="submit">Guardar</button>
-          <button type="button" @click="handleCancel">Cancelar</button>
+          <button type="submit" class="btn-guardar">Guardar</button>
+          <button type="button" @click="handleCancel" class="btn-cancelar">
+            Cancelar
+          </button>
         </form>
       </div>
     </main>
   </div>
 </template>
 
-
-
-
-
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
 :root {
   --clr-primary: #896a4c;
-  --clr-success: #41f1b6;
+  --clr-success: #41f15b;
   --clr-white: #fff;
   --clr-info-dark: #7d8da1;
   --clr-info-light: #dce1eb;
   --clr-dark: #363949;
-  --clr-warnig: #ff4e4e;
+  --clr-warnig: #e02626;
   --clr-light: rgba(132, 139, 200, 0.18);
   --clr-dark-variant: #677483;
   --clr-color-background: #f6f6f9;
@@ -221,14 +237,20 @@ b {
 
 /*-------------MAIN SECTION--------------*/
 
+.botones-funciones-dashboard {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .container-dashboard {
-  margin-top: 20rem;
+  margin: 40px;
   display: flex;
   text-align: center;
   justify-content: center;
   position: relative;
   width: 60%;
-  transform: translate(30%, 0%);
+  transform: translate(30%, 20%);
 }
 
 main {
@@ -325,7 +347,7 @@ main .recent_order a {
 }
 
 .btn-añadir-obras {
-  padding: 0.5rem 1rem;
+  padding: 0.1rem 0.5rem;
   margin-left: 0.5rem;
   border: none;
   border-radius: 4px;
@@ -340,5 +362,112 @@ main .recent_order a {
 
 .btn-añadir-obras:disabled {
   background-color: #ccc;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos para el botón Guardar */
+.btn-guardar {
+  cursor: pointer;
+  height: 30px;
+  border-radius: 10%;
+  width: 70px;
+  background-color: #896a4c;
+  color: var(--clr-color-background);
+  margin-left: 10px;
+}
+
+.btn-guardar:hover {
+  background-color: var(--clr-success);
+  color: var(--clr-dark);
+}
+
+/* Estilos para el botón Cancelar */
+.btn-cancelar {
+  cursor: pointer;
+  height: 30px;
+  border-radius: 10%;
+  width: 70px;
+  background-color: #896a4c;
+  color: var(--clr-color-background);
+  margin-left: 10px;
+}
+
+.btn-cancelar:hover {
+  background-color: var(--clr-warnig);
+}
+
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 20px;
+}
+
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 10px;
+}
+
+.Btn:active {
+  transform: translate(2px ,2px);
 }
 </style>
