@@ -6,6 +6,15 @@ import ContactoView from "../views/ContactoView.vue"
 import LoginView from "../views/LoginView.vue"
 import DetallesView from "../views/DetallesView.vue"
 import DashboardView from "../views/DashboardView.vue"
+import NotFound from "../components/NotFound.vue"
+
+const routes = [
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFound',
+      component: NotFound
+    }
+  ];
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,8 +54,11 @@ const router = createRouter({
             name: 'dashboard',
             component: DashboardView
         },
-
-
+        {
+            path: '/:catchAll(.*)',
+            name: 'NotFound',
+            component: NotFound
+        },
         {
             path: '/obras/:id',
             name: 'Detalles',
