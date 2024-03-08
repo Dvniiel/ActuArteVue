@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
     import { RouterLink } from 'vue-router'
 </script>
@@ -6,8 +7,8 @@
     <footer class="footer">
         <div class="footer__col-1">
             <h3 class="footer__title">Redes sociales</h3>
-            <a href="#"><i class="ri-facebook-box-fill"></i></a>
-            <a href="#"><i class="ri-github-fill"></i></a>
+            <a href="https://github.com/Dvniiel/ActuArteBack"><i class="ri-github-fill"></i></a>
+            <a href="https://github.com/Dvniiel/ActuArteVue"><i class="ri-github-fill"></i></a>
             <a href="#"><i class="ri-instagram-fill"></i></a>
         </div>
 

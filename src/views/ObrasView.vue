@@ -1,33 +1,18 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useObrasStore } from '@/store/ObrasStore';
 
 const obrasStore = useObrasStore();
+const arrowFinal = ref(null); // Crear una referencia para la imagen
+
+// Función para desplazarse a la imagen
+const scrollToImage = () => {
+  arrowFinal.value.scrollIntoView({ behavior: 'smooth' });
+};
 
 onMounted(() => {
   obrasStore.fetchObras();
 });
-
-
-
-// Crear referencias reactivas para los elementos del DOM.
-/*
-const arrow = ref<HTMLElement | null>(null);
-const arrowFinal = ref<HTMLElement | null>(null);
-
-onMounted(() => {
-    // Acceder a los elementos del DOM después de que el componente se haya montado.
-    arrow.value = document.getElementById('arrow');
-    arrowFinal.value = document.getElementById('arrow-final');
-
-    // Añadir el event listener si ambos elementos están presentes.
-    if (arrow.value && arrowFinal.value) {
-        arrow.value.addEventListener('click', (): void => {
-            arrowFinal.value?.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
-});
-*/
 </script>
 
 
@@ -42,12 +27,12 @@ onMounted(() => {
             <a href="#" id="recientes"><span>Recientes</span></a>
         </div>
         <div>
-            <i id="arrow" class="ri-arrow-down-line"></i>
+            <i id="arrow" class="ri-arrow-down-line" @click="scrollToImage"></i>
         </div>
     </section>
 
     <img class="wave-1" src="../assets/img/wave1 copia.png" alt="">
-    <img class="wave-2" src="../assets/img/wave2 copia.png" id="arrow-final" alt="">
+    <img class="wave-2" src="../assets/img/wave2 copia.png" ref="arrowFinal" alt="">
 
 
 
