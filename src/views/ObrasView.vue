@@ -7,12 +7,24 @@ const arrowFinal = ref(null); // Crear una referencia para la imagen
 
 // Función para desplazarse a la imagen
 const scrollToImage = () => {
-  arrowFinal.value.scrollIntoView({ behavior: 'smooth' });
+    arrowFinal.value.scrollIntoView({ behavior: 'smooth' });
 };
 
 onMounted(() => {
-  obrasStore.fetchObras();
+    obrasStore.fetchObras();
 });
+
+const fetchObrasAclamadas = () => {
+    obrasStore.fetchObrasAclamadas();
+};
+
+const fetchObrasRecientes = () => {
+    obrasStore.fetchObrasRecientes();
+};
+
+const fetchUltimasSesiones = () => {
+    obrasStore.fetchUltimasSesiones();
+};
 </script>
 
 
@@ -20,11 +32,11 @@ onMounted(() => {
 
 <template>
     <section class="container top-products">
-        <br> <br> <br>
         <div class="container-options">
-            <a href="#" id="ultimas-sesiones"><span>Ultimas sesiones</span></a>
-            <a href="#" id="aclamadas"><span>Mas aclamadas</span></a>
-            <a href="#" id="recientes"><span>Recientes</span></a>
+
+            <button id="ultimas-sesiones" @click="fetchUltimasSesiones"><span>Ultimas sesiones</span></button>
+            <button id="aclamadas" @click="fetchObrasAclamadas"><span>Mas aclamadas</span></button>
+            <button id="recientes" @click="fetchObrasRecientes"><span>Recientes</span></button>
         </div>
         <div>
             <i id="arrow" class="ri-arrow-down-line" @click="scrollToImage"></i>
@@ -38,17 +50,18 @@ onMounted(() => {
 
     <br><br><br><br>
     <div class="container-products" id="obras-container">
-    <div class="card-product" v-for="obra in obrasStore.obras" :key="obra.idObra">
-      <div class="container-img">
-        <img :src="obra.imagen" :alt="obra.nombreObra" class="img-item">
-      </div>
-      <div class="content-card-product">
+        <div class="card-product" v-for="obra in obrasStore.obras" :key="obra.idObra">
+            <div class="container-img">
+                <img :src="obra.imagen" :alt="obra.nombreObra" class="img-item">
+            </div>
+            <div class="content-card-product">
 
-        <h3 class="titulo-item">{{ obra.nombreObra }}</h3>
-        <RouterLink :to="{ name: 'Detalles', params: { id: obra.idObra } }" class="obras-button">Detalles</RouterLink>
-      </div>
+                <h3 class="titulo-item">{{ obra.nombreObra }}</h3>
+                <RouterLink :to="{ name: 'Detalles', params: { id: obra.idObra } }" class="obras-button">Detalles
+                </RouterLink>
+            </div>
+        </div>
     </div>
-  </div>
     <br><br><br><br>
 </template>
 
@@ -350,77 +363,77 @@ body::-webkit-scrollbar-thumb {
 /*-----------------------------------*\
    * #OBRAS
 \*-----------------------------------*/
-    .container-products {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-        gap: 3rem;
-        width: 100%;
-    }
+.container-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 3rem;
+    width: 100%;
+}
 
-    .card-product {
-        background-color: var(--text-color);
-        padding: 2rem 3rem;
-        border-radius: 0.5rem;
-        box-shadow: var(--box-shadow);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow: hidden;
-        /* Esto asegura que nada se desborde del borde redondeado */
-    }
+.card-product {
+    background-color: var(--text-color);
+    padding: 2rem 3rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    /* Esto asegura que nada se desborde del borde redondeado */
+}
 
-    .container-img {
-        width: 100%;
-        height: 15rem;
-        /* Establece un alto fijo para el contenedor de la imagen */
-        display: flex;
-        justify-content: center;
-        overflow: hidden;
-        /* Agregar esto para manejar imágenes que sean más altas que el contenedor */
-    }
+.container-img {
+    width: 100%;
+    height: 15rem;
+    /* Establece un alto fijo para el contenedor de la imagen */
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    /* Agregar esto para manejar imágenes que sean más altas que el contenedor */
+}
 
-    .container-img img {
-        width: 100%;
-        /* Establece un ancho fijo */
-        height: 100%;
-        /* Establece un alto fijo */
-        object-fit: cover;
-        /* Mantener la proporción de la imagen sin distorsionar */
-    }
+.container-img img {
+    width: 100%;
+    /* Establece un ancho fijo */
+    height: 100%;
+    /* Establece un alto fijo */
+    object-fit: cover;
+    /* Mantener la proporción de la imagen sin distorsionar */
+}
 
-    .content-card-product {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.content-card-product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .content-card-product h3 {
-        color: #000;
-        font-weight: 600;
-        font-size: 16px;
-        text-align: center;
-        margin-top: 1rem;
-    }
+.content-card-product h3 {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 1rem;
+}
 
-    .obras-button {
-        background-color: var(--dark-color);
-        border: none;
-        border-radius: 30px;
-        padding: 14px 35px;
-        color: white;
-        font-size: 20px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 1rem;
-        width: fit-content;
-    }
+.obras-button {
+    background-color: var(--dark-color);
+    border: none;
+    border-radius: 30px;
+    padding: 14px 35px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: fit-content;
+}
 
-    .obras-button:hover {
-        background-color: var(--btn-color);
-        color: #ffffff;
-        box-shadow: var(--box-shadow);
-    }
+.obras-button:hover {
+    background-color: var(--btn-color);
+    color: #ffffff;
+    box-shadow: var(--box-shadow);
+}
 
 /*-----------------------------------*\
    * #SEPARACION
@@ -510,6 +523,7 @@ body::-webkit-scrollbar-thumb {
     transition: all 0.35s;
 }
 
-/*# sourceMappingURL=menu.css.map */</style>
+/*# sourceMappingURL=menu.css.map */
+</style>
 
 @/store/ObrasStore

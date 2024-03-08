@@ -21,5 +21,23 @@ export const useObrasStore = defineStore("obras", {
         console.error("Hubo un error al obtener las obras: ", error);
       }
     },
+
+    async fetchObrasAclamadas() {
+      const response = await axios.get('http://localhost:8001/Obras/aclamadas');
+      this.obras = response.data;
+    },
+
+    async fetchObrasRecientes() {
+      const response = await axios.get('http://localhost:8001/Obras/recientes');
+      this.obras = response.data;
+    },
+
+    async fetchUltimasSesiones() {
+      const response = await axios.get('http://localhost:8001/Obras/ultimasSesiones');
+      this.obras = response.data;
+    },
+    
   },
+
+  
 });
