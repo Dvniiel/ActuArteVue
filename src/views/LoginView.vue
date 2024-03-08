@@ -1,31 +1,44 @@
 <script setup lang="ts">
+import { useLoginStore } from '@/Store/LoginStore';
+import { ref } from 'vue';
 
+
+const formData = ref({ username: '', password: '' });
+
+
+const loginStore = useLoginStore();
+
+
+const login = async () => {
+  try {
+    await loginStore.fetchLogin(formData.value.username, formData.value.password);
+    if (loginStore.obra) {
+
+      window.location.href = '/dashboard'; 
+    } else {
+      console.error('Credenciales inválidas');
+    }
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+  }
+}
 </script>
 
-
-
-
 <template>
-    <body>
-        <div class="card">
-            
-            <h2>Cuenta Admin</h2>
-            <form class="form">
-                <input type="Username" placeholder="usuario">
-                <input type="password" placeholder="Password">
-                <RouterLink to="/dashboard" class="submit" id="sectionHead">Entrar</RouterLink>
-            </form>
-        </div>
-    </body>
+  <div class="card">
+    <h2>Cuenta Admin</h2>
+    <form class="form" @submit.prevent="login">
+      <input type="text" placeholder="Usuario" v-model="formData.username">
+      <input type="password" placeholder="Contraseña" v-model="formData.password">
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
 </template>
 
 
 
 
-
-
 <style>
-
 * {
     margin: 0;
     padding: 0;
@@ -150,6 +163,4 @@
     color: #fff;
     background-color: var(--main-color);
 }
-
-
 </style>
