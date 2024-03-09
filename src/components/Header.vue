@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 
 import { onMounted, onUnmounted, ref, reactive } from 'vue';
@@ -177,11 +178,22 @@ body::-webkit-scrollbar-thumb {
     width: 30%;
 }
 
-body {
-    min-height: 100vh;
-    list-style: none;
-    text-decoration: none;
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-color);
+    padding: 28px 12%;
+    transition: all 0.5s ease;
+    font-size: 1.3rem;
 }
+
+
 
 .header {
     width: 100%;
@@ -198,13 +210,9 @@ body {
 
 
 .header-placeholder {
-    height: 70px;
+    height: 200px;
 }
 
-.main-content {
-    padding-top: 70px;
-    background-color: #C2BAAA;
-}
 
 /* -------------------------------------IZQUIERDA------------------------------------- */
 .header__logo {

@@ -136,66 +136,7 @@ body::-webkit-scrollbar-thumb {
 
 
 /* ------------------------------------- MEDIA QUERY HEADER ------------------------------------- */
-@media (max-width: 1280px) {
-  .header {
-    padding: 14px 2%;
-    transition: 0.2s;
-  }
 
-  .header__nav-item {
-    padding: 5px 0;
-    margin: 0px 20px;
-  }
-}
-
-@media (max-width: 1090px) {
-  #menu-icon {
-    display: block;
-  }
-
-  .header__navbar {
-    position: absolute;
-    top: 100%;
-    right: -100%;
-    width: 270px;
-    height: 29vh;
-    background: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border-radius: 10px;
-    transition: all 0.5s ease;
-  }
-
-  .header__nav-item {
-    display: block;
-    margin: 12px 0;
-    padding: 0px 25px;
-    transition: all 0.5s ease;
-    color: var(--bg-color);
-  }
-
-  .header__nav-item--active {
-    color: var(--bg-color);
-  }
-
-  .header__nav-item:hover {
-    color: var(--bg-color);
-    transform: translateY(5px);
-  }
-
-  .header__nav-item:active {
-    color: var(--bg-color);
-  }
-
-  .header__navbar.open {
-    right: 2%;
-  }
-
-  .reservar-asientos__imagen img {
-    height: 100%;
-  }
-}
 
 @media (min-width: 0) {
   .reservar-asientos__imagen {

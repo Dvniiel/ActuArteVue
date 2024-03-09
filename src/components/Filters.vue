@@ -1,27 +1,53 @@
-<!-- SCRIPTS PARA LOS FILTROS -->
-<script setup lang="ts">
+<!-- eslint-disable vue/multi-word-component-names -->
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useObrasStore } from '@/store/ObrasStore';
 
 
 
+const obrasStore = useObrasStore();
+
+const arrowFinal = ref(null); // Crear una referencia para la imagen
+
+// Función para desplazarse a la imagen
+const scrollToImage = () => {
+    arrowFinal.value.scrollIntoView({ behavior: 'smooth' });
+};
+
+const fetchObrasAclamadas = () => {
+    obrasStore.fetchObrasAclamadas();
+};
+
+const fetchObrasRecientes = () => {
+    obrasStore.fetchObrasRecientes();
+};
+
+const fetchUltimasSesiones = () => {
+    obrasStore.fetchUltimasSesiones();
+};
 </script>
 
 
 
-<!-- FILTROS PARA LAS OBRAS -->
+
 <template>
+    <div class="header-placeholder"></div>
     <section class="container top-products">
-        <br> <br> <br>
         <div class="container-options">
-            <a href="#" id="ultimas-sesiones"><span>Ultimas sesiones</span></a>
-            <a href="#" id="aclamadas"><span>Mas aclamadas</span></a>
-            <a href="#" id="recientes"><span>Recientes</span></a>
+
+            <button id="ultimas-sesiones" @click="fetchUltimasSesiones"><span>Ultimas sesiones</span></button>
+            <button id="aclamadas" @click="fetchObrasAclamadas"><span>Mas aclamadas</span></button>
+            <button id="recientes" @click="fetchObrasRecientes"><span>Recientes</span></button>
         </div>
         <div>
-            <i id="arrow" class="ri-arrow-down-line"></i>
+            <i id="arrow" class="ri-arrow-down-line" @click="scrollToImage"></i>
         </div>
     </section>
-</template>
 
+    <img class="wave-1" src="../assets/img/wave1 copia.png" alt="">
+    <img class="wave-2" src="../assets/img/wave2 copia.png" ref="arrowFinal" alt="">
+
+</template>
 
 <!-- ESTILOS PARA LOS FILTROS -->
 <style>
