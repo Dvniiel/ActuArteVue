@@ -1,17 +1,30 @@
 <script setup>
+
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+
+
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 
 const route = useRoute();
+
+/* No mostrar Header ni Footer en estas secciones. */
 const showHeaderAndFooter = computed(() => ![ 'NotFound', 'dashboard', 'login' ].includes(route.name));
 </script>
 
 <template>
+
+  <!-- HEADER -->
   <Header v-if="showHeaderAndFooter" />
+
+
+  <!-- VISTAS DE LA WEB -->
   <main>
     <RouterView />
   </main>
+
+
+  <!-- FOOTER -->
   <Footer v-if="showHeaderAndFooter" />
 </template>

@@ -159,7 +159,6 @@ function handleCancel() {
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
 :root {
   --clr-primary: #896a4c;
@@ -183,16 +182,7 @@ function handleCancel() {
   --box-shadow: 0 2rem 3rem var(--clr-light);
 }
 
-* {
-  box-sizing: border-box;
-  text-decoration: none;
-  border: 0;
-  list-style: none;
-  appearance: none;
-}
-
 body {
-  font-family: "Poppins", sans-serif;
   width: 100%;
   height: 100vh;
   font-size: 0.88rem;
