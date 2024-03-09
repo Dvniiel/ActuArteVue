@@ -1,88 +1,58 @@
-<!-- SCRTIP PARA LAS TARJETAS DE OBRAS EN LA HOMEPAGE -->
-<script setup lang="ts">
-defineProps<{
-    title?: string
-    image?: string
-}>()
+<script setup>
+import { onMounted } from "vue";
+import { useInicioStore } from "@/store/InicioStore";
 
+const inicioStore = useInicioStore();
 
-const obras = [
-    { title: 'Wicked', id: 1, image: 'https://m.media-amazon.com/images/M/MV5BNjczYjBhMTctYTA3Yy00NTgyLWFkZWQtZjQwYTRkMDc1YTc1XkEyXkFqcGdeQXVyNTk5NTQzNDI@._V1_.jpg' },
-    { title: 'La divina comedia', id: 2, image: 'https://m.media-amazon.com/images/I/71WJbXGxPdL._AC_UF1000,1000_QL80_.jpg' },
-    { title: 'la vida es sueño', id: 3, image: 'https://www.elejandria.com/covers/La_vida_es_sueno-Calderon_de_la_Barca_Pedro-md.png' }
-]
+onMounted(() => {
+  inicioStore.fetchObras();
+});
 </script>
 
-
-
-
-<!-- COMPONENTE PARA LAS 3 OBRAS DEL MENU -->
-<!--las tres obras se escogeran aleatoriamente de las 16 que haya en la BD-->
 <template>
-    <h1 class="obras__title">Nuevas obras</h1>
-    <section class="obras-index">
-        <div class="obra" v-for="obra in obras" :key="obra.id" :title="obra.title" :image="obra.image">
+  <!-- Obras -->
+  <h1 class="obras__title">Nuevas obras</h1>
+  <section class="obras-index">
+    <div
+      class="obra"
+      v-for="obra in inicioStore.obras"
+      :key="obra.idObra"
+      :title="obra.nombreObra"
+      :image="obra.imagen"
+    >
+      <div class="container-img">
+        <img :src="obra.imagen" :alt="nombreObra" class="img-item" />
+      </div>
 
-            <div class="container-img">
-                <img :src="obra.image" :alt="title" class="img-item" />
-            </div>
-
-            <div class="content-card-obra">
-                <h3 class="content-card-obra__title">{{ obra.title }}</h3>
-                <RouterLink to="/obras" class="obras-button content-card-obra__button">Ver Más</RouterLink>
-            </div>
-
-        </div>
-    </section>
+      <div class="content-card-obra">
+        <h3 class="content-card-obra__title">{{ obra.nombreObra }}</h3>
+        <RouterLink to="/obras" class="obras-button content-card-obra__button"
+          >Ver Más</RouterLink
+        >
+      </div>
+    </div>
+  </section>
 </template>
 
 
-<!-- ESTILOS PARA LAS 3 OBRAS DEL INDEX -->
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
+/*-----------------------------------*\
+   * #OBRAS
+\*-----------------------------------*/
+.obras__title {
+  font-size: 50px;
+  color: #000;
+  margin-bottom: 25px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 
-:root {
-    --primary-color: #c7a17a;
-    --background-color: #f9f5f0;
-    --dark-color: #63595c;
-    --bg-color: #716A5C;
-    --text-color: #F1E9DB;
-    --main-color: #f1d791;
-    --btn-color: #5e0a0f;
-    --box-shadow: 0 2rem 3rem var(--dark-color);
-}
-
-/*SCROOLBAR*/
-body {
-    background-color: #C2BAAA;
-    font-family: "Poppins", sans-serif;
-}
-
-body::-webkit-scrollbar {
-    width: 12px;
-}
-
-body::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: var(--main-color);
-    border-radius: 20px;
-    border: 1px solid var(--dark-color);
-}
 
 .obras-index {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 70px;
 }
 
 .obra {
@@ -96,11 +66,11 @@ body::-webkit-scrollbar-thumb {
   box-shadow: var(--box-shadow);
 }
 
-.obras__title {
+.content-card-obra__title {
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 50px;
+  font-size: 20px;
   color: #000;
   margin-bottom: 55px;
 }
@@ -171,4 +141,6 @@ body::-webkit-scrollbar-thumb {
     color: #ffffff;
     box-shadow: var(--box-shadow);
 }
+
+
 </style>

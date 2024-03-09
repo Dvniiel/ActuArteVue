@@ -1,74 +1,34 @@
-<!-- SCRIPT PARA EL CARRUSEL DE IMAGENES -->
-<script setup lang="ts">
-
+<!-- eslint-disable vue/multi-word-component-names -->
+<script>
 
 </script>
 
 
+
 <!-- CARRUSEL DE IMAGENES -->
 <template>
-    <section class="container-slider">
-        <div class="slider-wrapper">
-            <div class="slider">
-                <img id="slide-1" src="../assets/img/slider1.jpg" />
-                <img id="slide-2" src="../assets/img/slider2.jpg" />
-                <img id="slide-3" src="../assets/img/slider3.jpg" />
-            </div>
-            <div class="slider-nav">
-                <a href="#slide-1"></a>
-                <a href="#slide-2"></a>
-                <a href="#slide-3"></a>
-            </div>
-        </div>
-    </section>
+  <!-- Slider -->
+  <section class="container-slider">
+    <div class="slider-wrapper">
+      <div class="slider">
+        <img id="slide-1" src="../assets/img/slider1.jpg" />
+        <img id="slide-2" src="../assets/img/slider2.jpg" />
+        <img id="slide-3" src="../assets/img/slider3.jpg" />
+      </div>
+      <div class="slider-nav">
+        <a href="#slide-1"></a>
+        <a href="#slide-2"></a>
+        <a href="#slide-3"></a>
+      </div>
+    </div>
+  </section>
 </template>
-
-
 
 <!-- ESTILOS PARA EL CARRUSEL DE IMAGENES -->
 <style>
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-  list-style: none;
-}
-
-:root {
-  --primary-color: #c7a17a;
-  --background-color: #f9f5f0;
-  --dark-color: #63595c;
-  --bg-color: #716A5C;
-  --text-color: #F1E9DB;
-  --main-color: #f1d791;
-  --btn-color: #5e0a0f;
-  --box-shadow: 0 2rem 3rem var(--dark-color);
-}
-
-/*SCROOLBAR*/
-body {
-  background-color: #C2BAAA;
-  font-family: "Poppins", sans-serif;
-}
-
-body::-webkit-scrollbar {
-  width: 12px;
-}
-
-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--main-color);
-  border-radius: 20px;
-  border: 1px solid var(--dark-color);
-}
-
+/*-----------------------------------*\
+   * #CARRUSEL
+\*-----------------------------------*/
 .container-slider {
   margin-top: 1300px;
   width: 100%;
