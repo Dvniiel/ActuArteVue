@@ -7,7 +7,7 @@ import { ref } from "vue";
 
 <template>
 
-  <!--COMPONENTE DEL LOGIN-->
+  <!-- FORMULARIO -->
   <Login/>
 
 </template>

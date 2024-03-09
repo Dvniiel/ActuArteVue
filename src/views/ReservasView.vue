@@ -4,7 +4,7 @@ import Asientos from '@/components/Asientos.vue'
 
 <template>
 
-    <!-- COMPONENTE DE ASIENTOS -->
+    <!-- ASIENTOS -->
     <Asientos/>
     
 </template>

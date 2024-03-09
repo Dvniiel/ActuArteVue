@@ -19,4 +19,14 @@ import Slider from '@/components/Slider.vue'
 
 </template>
 
+<style>
 
+body {
+    background-color: #C2BAAA;
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
