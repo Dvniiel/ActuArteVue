@@ -13,22 +13,14 @@ onMounted(() => {
   <!-- Obras -->
   <h1 class="obras__title">Nuevas obras</h1>
   <section class="obras-index">
-    <div
-      class="obra"
-      v-for="obra in inicioStore.obras"
-      :key="obra.idObra"
-      :title="obra.nombreObra"
-      :image="obra.imagen"
-    >
+    <div class="obra" v-for="obra in inicioStore.obras" :key="obra.idObra" :title="obra.nombreObra" :image="obra.imagen">
       <div class="container-img">
         <img :src="obra.imagen" :alt="nombreObra" class="img-item" />
       </div>
 
       <div class="content-card-obra">
         <h3 class="content-card-obra__title">{{ obra.nombreObra }}</h3>
-        <RouterLink to="/obras" class="obras-button content-card-obra__button"
-          >Ver Más</RouterLink
-        >
+        <RouterLink to="/obras" class="obras-button content-card-obra__button">Ver Más</RouterLink>
       </div>
     </div>
   </section>
@@ -82,65 +74,63 @@ onMounted(() => {
 
 
 .container-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 3rem;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 3rem;
+  width: 100%;
 }
 
 .card-product {
-    background-color: var(--text-color);
-    padding: 2rem 3rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--box-shadow);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: var(--text-color);
+  padding: 2rem 3rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container-img {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .container-img img {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .content-card-product {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content-card-product h3 {
-    font-weight: 400;
-    font-size: 16px;
-    text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
 }
 
 .obras-button {
-    background-color: var(--dark-color);
-    border: none;
-    border-radius: 30px;
-    padding: 14px 35px;
-    color: white;
-    font-size: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 1rem;
-    width: fit-content;
+  background-color: var(--dark-color);
+  border: none;
+  border-radius: 30px;
+  padding: 14px 35px;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: fit-content;
 }
 
 .obras-button:hover {
-    background-color: var(--btn-color);
-    color: #ffffff;
-    box-shadow: var(--box-shadow);
+  background-color: var(--btn-color);
+  color: #ffffff;
+  box-shadow: var(--box-shadow);
 }
-
-
 </style>

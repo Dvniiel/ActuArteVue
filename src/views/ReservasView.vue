@@ -1,11 +1,16 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import { useRoute } from 'vue-router'
 
 interface Seat {
     row: number;
     col: number;
     color: string;
 }
+const route = useRoute();
+//const idSesion = route.params.idsesion as string;
+
+
 
 export default defineComponent({
     name: 'SeatMap',

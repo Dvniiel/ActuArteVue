@@ -25,15 +25,29 @@ onMounted(() => {
               <h1>INFORMACION DE LA OBRA</h1>
             </div>
             <div class="details__card-mid">
+
               <p>{{ obra.autorObra }}</p>
               <p>{{ obra.valoracionObra }} de valoracion</p>
               <p>{{ obra.directorObra }}</p>
               <p>{{ obra.duracionObra }} minutos</p>
+
               <h3>Sesiones disponibles en nuestras salas:</h3>
               <div class="sesiones">
-                <button>SESION 1</button>
-                <button>SESION 2</button>
-                <button>SESION 3</button>
+
+                <button>
+                  <RouterLink :to="{
+                    path: '/reservas/' + obra.id,
+                    query: { idSesion: 1 }
+                  }">Sesion 1</RouterLink>
+                </button>
+
+                <button>
+                  <RouterLink to="/reservas?idsesion=2">Sesion 2</RouterLink>
+                </button>
+
+                <button>
+                  <RouterLink to="/reservas?idsesion=3">Sesion 3</RouterLink>
+                </button>
               </div>
             </div>
           </div>
