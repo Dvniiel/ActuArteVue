@@ -13,9 +13,9 @@ onMounted(() => {
   <!-- Obras -->
   <h1 class="obras__title">Nuevas obras</h1>
   <section class="obras-index">
-    <div class="obra" v-for="obra in inicioStore.obras" :key="obra.idObra" :title="obra.nombreObra" :image="obra.imagen">
+    <div class="obra" v-for="obra in inicioStore.obras" :key="obra.idObra" :image="obra.imagen">
       <div class="container-img">
-        <img :src="obra.imagen" :alt="nombreObra" class="img-item" />
+        <img :src="obra.imagen" class="img-item" />
       </div>
 
       <div class="content-card-obra">

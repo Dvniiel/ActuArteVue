@@ -1,16 +1,13 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router';
 
 interface Seat {
+    idAsiento: number;
     row: number;
     col: number;
     color: string;
 }
-const route = useRoute();
-//const idSesion = route.params.idsesion as string;
-
-
 
 export default defineComponent({
     name: 'SeatMap',
@@ -20,14 +17,14 @@ export default defineComponent({
         const defaultColor = '#9E9E9E';
         const selectedColor = '#f1d791';
 
-        // Estructura de datos para mantener el estado de cada asiento
         const seats = reactive<Record<string, Seat>>({});
 
-        // Inicializa todos los asientos con el color por defecto
+        let idAsiento = 1;
         rows.forEach(row => {
             cols.forEach(col => {
                 const key = `row${row}col${col}`;
-                seats[key] = { row, col, color: defaultColor };
+                seats[key] = { idAsiento, row, col, color: defaultColor };
+                idAsiento++;
             });
         });
 
