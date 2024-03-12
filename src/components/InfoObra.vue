@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, toRefs } from "vue";
-import { useDetallesStore } from "@/store/DetallesStore";
+import { useDetallesStore } from "@/Store/DetallesStore";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -36,17 +36,23 @@ onMounted(() => {
 
                 <button>
                   <RouterLink :to="{
-                    path: '/reservas/' + obra.id,
+                    path: '/reservas/' + obra.idObra,
                     query: { idSesion: 1 }
                   }">Sesion 1</RouterLink>
                 </button>
 
                 <button>
-                  <RouterLink to="/reservas?idsesion=2">Sesion 2</RouterLink>
+                  <RouterLink :to="{
+                    path: '/reservas/' + obra.idObra,
+                    query: { idSesion: 2 }
+                  }">Sesion 2</RouterLink>
                 </button>
 
                 <button>
-                  <RouterLink to="/reservas?idsesion=3">Sesion 3</RouterLink>
+                  <RouterLink :to="{
+                    path: '/reservas/' + obra.idObra,
+                    query: { idSesion: 3 }
+                  }">Sesion 3</RouterLink>
                 </button>
               </div>
             </div>
