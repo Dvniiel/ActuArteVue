@@ -1,30 +1,30 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useObrasStore } from '@/Store/ObrasStore.ts';
+import { onMounted } from 'vue';
+import { useObrasStore } from '@/Store/ObrasStore';
+
 const obrasStore = useObrasStore();
 
 onMounted(() => {
-    obrasStore.fetchObras();
+  obrasStore.fetchObras();
 });
 </script>
 
-
 <template>
     <div class="container-products" id="obras-container">
-        <div class="card-product" v-for="obra in obrasStore.obras" :key="obra.idObra">
-            <div class="container-img">
-                <img :src="obra.imagen" :alt="obra.nombreObra" class="img-item">
-            </div>
-            <div class="content-card-product">
-
-                <h3 class="titulo-item">{{ obra.nombreObra }}</h3>
-                <RouterLink :to="{ name: 'Detalles', params: { id: obra.idObra } }" class="obras-button">Detalles
-                </RouterLink>
-            </div>
+      <div class="card-product" v-for="obra in obrasStore.obrasFiltradas" :key="obra.idObra">
+        <div class="container-img">
+          <img :src="obra.imagen" :alt="obra.nombreObra" class="img-item" />
         </div>
+        <div class="content-card-product">
+          <h3 class="titulo-item">{{ obra.nombreObra }}</h3>
+          <RouterLink :to="{ name: 'Detalles', params: { id: obra.idObra } }" class="obras-button">
+            Detalles
+          </RouterLink>
+        </div>
+      </div>
     </div>
-</template>
+  </template>
 
 
 

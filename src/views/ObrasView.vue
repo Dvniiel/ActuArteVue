@@ -2,6 +2,7 @@
 
 import Filters from '@/components/Filters.vue';
 import Card from '@/components/Card.vue'
+import SearchBar from '@/components/SearchBar.vue';
 
 
 </script>
@@ -11,12 +12,20 @@ import Card from '@/components/Card.vue'
 
 <template>
 
+    
+
     <!-- FILTROS Y FLECHA DE DESPLAZAMIENTO -->
     <Filters />
 
 
+    <!--BARRA DE BUSQUEDA PARA OBRAS-->
+    <SearchBar/>
+
+    
     <!-- TARJETAS DE LAS OBRAS -->
     <Card/>
+
+    
     
 </template>
 

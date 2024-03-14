@@ -10,7 +10,17 @@ interface Obra {
 export const useObrasStore = defineStore("obras", {
   state: () => ({
     obras: [] as Obra[],
+    searchQuery: '',
   }),
+
+  getters: {
+    obrasFiltradas: (state) => {
+      if (!state.searchQuery) return state.obras;
+      return state.obras.filter((obra) =>
+        obra.nombreObra.toLowerCase().includes(state.searchQuery.toLowerCase())
+      );
+    },
+  },
 
   actions: {
     async fetchObras() {
@@ -20,6 +30,10 @@ export const useObrasStore = defineStore("obras", {
       } catch (error) {
         console.error("Hubo un error al obtener las obras: ", error);
       }
+    },
+
+    setSearchQuery(query: string) {
+      this.searchQuery = query;
     },
 
     async fetchObrasAclamadas() {
