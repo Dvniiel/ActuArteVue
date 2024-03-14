@@ -1,15 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useObrasStore } from '@/Store/ObrasStore';
 
 
 
 const obrasStore = useObrasStore();
 
-const arrowFinal = ref(null); // Crear una referencia para la imagen
+const arrowFinal = ref(null);
 
-// Función para desplazarse a la imagen
+
 const scrollToImage = () => {
     arrowFinal.value.scrollIntoView({ behavior: 'smooth' });
 };
@@ -48,6 +48,8 @@ const fetchUltimasSesiones = () => {
     <img class="wave-2" src="../assets/img/wave2 copia.png" ref="arrowFinal" alt="">
 
 </template>
+
+
 
 <!-- ESTILOS PARA LOS FILTROS -->
 <style>

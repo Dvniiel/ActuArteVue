@@ -103,7 +103,6 @@ function handleCancel() {
         </table>
       </div>
 
-      <!-- Formulario para añadir o editar obras -->
       <div
         v-if="
           obraSeleccionada &&
@@ -363,7 +362,6 @@ main .recent_order a {
   transition: background-color 0.3s ease;
 }
 
-/* Estilos para el botón Guardar */
 .btn-guardar {
   cursor: pointer;
   height: 30px;
@@ -379,7 +377,6 @@ main .recent_order a {
   color: var(--clr-dark);
 }
 
-/* Estilos para el botón Cancelar */
 .btn-cancelar {
   cursor: pointer;
   height: 30px;
@@ -410,7 +407,6 @@ main .recent_order a {
   background-color: rgb(255, 65, 65);
 }
 
-/* plus sign */
 .sign {
   width: 100%;
   transition-duration: .3s;

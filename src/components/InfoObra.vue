@@ -15,14 +15,12 @@ interface Obra {
 const route = useRoute();
 const router = useRouter();
 const detallesStore = useDetallesStore();
-// Cambia el tipo de la referencia a `Obra | null` y usa `ref<Obra | null>(null)`.
 const obra = ref<Obra | null>(null);
 
 onMounted(async () => {
     const id = route.params.id;
     if (typeof id === 'string' || typeof id === 'number') {
         await detallesStore.fetchObra(id.toString());
-        // Ahora esto debería funcionar sin errores de tipo.
         obra.value = detallesStore.obra;
     }
 });
@@ -56,7 +54,6 @@ const navegarAReservas = (sesionId: number) => {
               <p>{{ obra.duracionObra }} minutos</p>
               <h3>Sesiones disponibles en nuestras salas:</h3>
               <div class="sesiones">
-                <!-- Botones para navegar a la vista de reservas con los IDs de obra y sesión -->
                 <button @click="navegarAReservas(1)">Sesión 1</button>
                 <button @click="navegarAReservas(2)">Sesión 2</button>
                 <button @click="navegarAReservas(3)">Sesión 3</button>
