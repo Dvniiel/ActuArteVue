@@ -45,7 +45,7 @@ const esAsientoOcupado = (asientoId: number) => {
 <template>
   <div class="reservas-view">
     <div class="navigation">
-      <RouterLink to="/">Volver al Inicio</RouterLink>
+      <RouterLink to="/" class="toIndex-button">Volver al Inicio</RouterLink>
     </div>
     <div class="showcase">
       <div class="seat selected"></div>
@@ -62,9 +62,9 @@ const esAsientoOcupado = (asientoId: number) => {
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid meet"
       >
-        <g v-for="row in 10" :key="row">
+        <g v-for="row in 6" :key="row">
           <circle
-            v-for="col in 15"
+            v-for="col in 9"
             :key="col"
             :cx="col * 6"
             :cy="row * 10"
@@ -81,7 +81,7 @@ const esAsientoOcupado = (asientoId: number) => {
         </g>
       </svg>
     </div>
-    <button @click="reservarAsientosSeleccionados">Reservar Asientos</button>
+    <button @click="reservarAsientosSeleccionados" class="reserve-button">Reservar Asientos</button>
     <p class="text">
       Has seleccionado <span>{{ asientosSeleccionados.length }}</span> asientos.
     </p>
@@ -100,17 +100,10 @@ const esAsientoOcupado = (asientoId: number) => {
   --box-shadow: 0 2rem 3rem var(--dark-color);
 }
 
-.top {
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-}
 
 .container {
   display: flex;
-  justify-content: center;
+  transform: translate(5.5%);
 }
 
 .seat {
@@ -137,7 +130,7 @@ const esAsientoOcupado = (asientoId: number) => {
   width: 50%;
   height: 50px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   list-style-type: none;
   padding: 5px 40px;
@@ -145,6 +138,7 @@ const esAsientoOcupado = (asientoId: number) => {
   box-shadow: var(--box-shadow);
   border-radius: 5px;
   color: var(--dark-color);
+  margin-top: 30px;
 }
 
 .showcase li {
@@ -198,5 +192,28 @@ const esAsientoOcupado = (asientoId: number) => {
 
 .Router__Index:hover {
   color: #000;
+}
+
+.reserve-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  transform: translate(0%,-400%);
+}
+
+.toIndex-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 40px;
 }
 </style>
