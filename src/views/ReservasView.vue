@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
+import { useDetallesStore } from "@/Store/DetallesStore";
 import { useAsientosStore } from '@/Store/AsientosStore';
 
 const route = useRoute();
+const detallesStore = useDetallesStore();
+const { obra } = toRefs(detallesStore);
 const obraId = ref(Number(route.params.obraId));
 const sesionId = ref(Number(route.query.sesionId));
 
@@ -44,9 +47,11 @@ const esAsientoOcupado = (asientoId: number) => {
 
 <template>
   <div class="reservas-view">
+
     <div class="navigation">
       <RouterLink to="/" class="toIndex-button">Volver al Inicio</RouterLink>
     </div>
+
     <div class="showcase">
       <div class="seat selected"></div>
       <small>Seleccionado</small>
@@ -55,6 +60,12 @@ const esAsientoOcupado = (asientoId: number) => {
       <div class="seat occupied"></div>
       <small>Ocupado</small>
     </div>
+
+    <div class="titulo-obra-reserva">
+      <h1>{{ obra.nombreObra }}</h1>
+    </div>
+
+
     <div class="container">
       <svg
         width="100%"
@@ -81,10 +92,13 @@ const esAsientoOcupado = (asientoId: number) => {
         </g>
       </svg>
     </div>
+
     <button @click="reservarAsientosSeleccionados" class="reserve-button">Reservar Asientos</button>
+
     <p class="text">
       Has seleccionado <span>{{ asientosSeleccionados.length }}</span> asientos.
     </p>
+
   </div>
 </template>
 
