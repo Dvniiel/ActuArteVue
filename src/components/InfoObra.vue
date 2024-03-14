@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useDetallesStore } from '@/store/DetallesStore';
+import { useDetallesStore } from '@/Store/DetallesStore';
 import { useRoute, useRouter } from 'vue-router';
 
 interface Obra {

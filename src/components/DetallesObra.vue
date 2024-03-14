@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, toRefs } from "vue";
-import { useDetallesStore } from "@/store/DetallesStore";
+import { useDetallesStore } from "@/Store/DetallesStore";
 import { useRoute } from "vue-router";
 
 const route = useRoute();

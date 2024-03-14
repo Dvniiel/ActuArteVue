@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { useLoginStore } from "@/store/LoginStore";
+import { useLoginStore } from "@/Store/LoginStore";
 import { ref } from "vue";
 
 const formData = ref({ username: "", password: "" });

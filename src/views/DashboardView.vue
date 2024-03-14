@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { useObrasStore, type Obra } from "@/store/DashboardStore";
+import { useObrasStore, type Obra } from "@/Store/DashboardStore";
 
 const obrasStore = useObrasStore();
 onMounted(() => {

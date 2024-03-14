@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useObrasStore } from '@/store/ObrasStore';
+import { useObrasStore } from '@/Store/ObrasStore';
 
 
 

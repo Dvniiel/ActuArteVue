@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
-import { useInicioStore } from "@/store/InicioStore";
+import { useInicioStore } from "@/Store/InicioStore";
 
 const inicioStore = useInicioStore();
 
