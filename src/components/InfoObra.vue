@@ -57,7 +57,7 @@ const navegarAReservas = (sesionId: number) => {
               <h3>Sesiones disponibles en nuestras salas:</h3>
               <div class="sesiones">
                 <!-- Botones para navegar a la vista de reservas con los IDs de obra y sesión -->
-                <button @click="navegarAReservas(1)">Reservar para Sesión 1</button>
+                <button @click="navegarAReservas(1)">Sesión 1</button>
                 <button @click="navegarAReservas(2)">Sesión 2</button>
                 <button @click="navegarAReservas(3)">Sesión 3</button>
               </div>
@@ -83,7 +83,12 @@ const navegarAReservas = (sesionId: number) => {
   --details-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
 }
 
+.content{
+  height: 700px;
+}
+
 .main__card-layer {
+  height: 350px;
   background: var(--details-bg-color);
   border-radius: 1rem;
   padding: 2rem;

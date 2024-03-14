@@ -51,6 +51,7 @@ onMounted(() => {
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     gap: 3rem;
     width: 100%;
+    margin-bottom: 50px;
 }
 
 .card-product {

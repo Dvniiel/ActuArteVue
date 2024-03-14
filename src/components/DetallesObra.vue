@@ -51,6 +51,10 @@ onMounted(() => {
   --details-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
 }
 
+.content{
+  width: 50%;
+}
+
 .main__card-layer {
   background: var(--details-bg-color);
   border-radius: 1rem;
