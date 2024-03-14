@@ -14,6 +14,9 @@ const asientosStore = useAsientosStore();
 const asientosSeleccionados = ref<number[]>([]);
 
 onMounted(async () => {
+  if (obraId.value) {
+    await detallesStore.fetchObra(obraId.value.toString());
+  }
   if (obraId.value && sesionId.value) {
     await asientosStore.cargarAsientos(obraId.value, sesionId.value);
   }
@@ -33,8 +36,7 @@ function seleccionarAsiento(asientoId: number) {
 const reservarAsientosSeleccionados = async () => {
   if (obraId.value && sesionId.value && asientosSeleccionados.value.length > 0) {
     await asientosStore.reservarAsientos(obraId.value, sesionId.value, asientosSeleccionados.value);
-    asientosSeleccionados.value = []; // Limpiar selección tras reserva
-    // Recargar asientos para reflejar los nuevos ocupados
+    asientosSeleccionados.value = [];
     await asientosStore.cargarAsientos(obraId.value, sesionId.value);
   }
 };
@@ -61,7 +63,7 @@ const esAsientoOcupado = (asientoId: number) => {
       <small>Ocupado</small>
     </div>
 
-    <div class="titulo-obra-reserva">
+    <div class="titulo-obra-reserva" v-if="obra">
       <h1>{{ obra.nombreObra }}</h1>
     </div>
 
