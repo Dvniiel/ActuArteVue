@@ -62,12 +62,12 @@ const router = createRouter({
         {
             path: '/obras/:id',
             name: 'Detalles',
-            component: () => import('../views/DetallesView.vue')
+            component: () => import('@/views/DetallesView.vue')
         },
         {
-            path: '/reservas/:id',
+            path: '/reservas/:obraId',
             name: 'Reservas',
-            component: () => import('../views/ReservasView.vue')
+            component: () => import('@/views/ReservasView.vue')
         }
 
     ]

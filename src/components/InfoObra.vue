@@ -1,18 +1,43 @@
 <script setup lang="ts">
-import { onMounted, toRefs } from "vue";
-import { useDetallesStore } from "@/store/DetallesStore";
-import { useRoute } from "vue-router";
+import { onMounted, ref } from 'vue';
+import { useDetallesStore } from '@/store/DetallesStore';
+import { useRoute, useRouter } from 'vue-router';
+
+interface Obra {
+  idObra: number;
+  nombreObra: string;
+  autorObra: string;
+  directorObra: string;
+  valoracionObra: number;
+  duracionObra: number;
+}
 
 const route = useRoute();
+const router = useRouter();
 const detallesStore = useDetallesStore();
-const { obra } = toRefs(detallesStore);
+// Cambia el tipo de la referencia a `Obra | null` y usa `ref<Obra | null>(null)`.
+const obra = ref<Obra | null>(null);
 
-onMounted(() => {
-  const id = Array.isArray(route.params.id)
-    ? route.params.id[0]
-    : route.params.id;
-  detallesStore.fetchObra(id as string);
+onMounted(async () => {
+    const id = route.params.id;
+    if (typeof id === 'string' || typeof id === 'number') {
+        await detallesStore.fetchObra(id.toString());
+        // Ahora esto debería funcionar sin errores de tipo.
+        obra.value = detallesStore.obra;
+    }
 });
+
+const navegarAReservas = (sesionId: number) => {
+    if (obra.value) {
+        router.push({
+            name: 'Reservas',
+            params: { obraId: obra.value.idObra.toString() },
+            query: { sesionId: sesionId.toString() }
+        }).catch(err => {
+            console.error("Error al navegar a reservas:", err);
+        });
+    }
+};
 </script>
 
 <template>
@@ -25,35 +50,16 @@ onMounted(() => {
               <h1>INFORMACION DE LA OBRA</h1>
             </div>
             <div class="details__card-mid">
-
               <p>{{ obra.autorObra }}</p>
               <p>{{ obra.valoracionObra }} de valoracion</p>
               <p>{{ obra.directorObra }}</p>
               <p>{{ obra.duracionObra }} minutos</p>
-
               <h3>Sesiones disponibles en nuestras salas:</h3>
               <div class="sesiones">
-
-                <button>
-                  <RouterLink :to="{
-                    path: '/reservas/' + obra.idObra,
-                    query: { idSesion: 1 }
-                  }">Sesion 1</RouterLink>
-                </button>
-
-                <button>
-                  <RouterLink :to="{
-                    path: '/reservas/' + obra.idObra,
-                    query: { idSesion: 2 }
-                  }">Sesion 2</RouterLink>
-                </button>
-
-                <button>
-                  <RouterLink :to="{
-                    path: '/reservas/' + obra.idObra,
-                    query: { idSesion: 3 }
-                  }">Sesion 3</RouterLink>
-                </button>
+                <!-- Botones para navegar a la vista de reservas con los IDs de obra y sesión -->
+                <button @click="navegarAReservas(1)">Reservar para Sesión 1</button>
+                <button @click="navegarAReservas(2)">Sesión 2</button>
+                <button @click="navegarAReservas(3)">Sesión 3</button>
               </div>
             </div>
           </div>
@@ -62,7 +68,6 @@ onMounted(() => {
     </section>
   </div>
 </template>
-
 
 <style>
 :root {
@@ -124,4 +129,3 @@ onMounted(() => {
   background-color: var(--primary-color);
 }
 </style>
-
