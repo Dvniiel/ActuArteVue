@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useDetallesStore } from '@/Store/DetallesStore';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref } from "vue";
+import { useDetallesStore } from "@/Store/DetallesStore";
+import { useRoute, useRouter } from "vue-router";
 
 interface Obra {
   idObra: number;
@@ -18,23 +18,25 @@ const detallesStore = useDetallesStore();
 const obra = ref<Obra | null>(null);
 
 onMounted(async () => {
-    const id = route.params.id;
-    if (typeof id === 'string' || typeof id === 'number') {
-        await detallesStore.fetchObra(id.toString());
-        obra.value = detallesStore.obra;
-    }
+  const id = route.params.id;
+  if (typeof id === "string" || typeof id === "number") {
+    await detallesStore.fetchObra(id.toString());
+    obra.value = detallesStore.obra;
+  }
 });
 
 const navegarAReservas = (sesionId: number) => {
-    if (obra.value) {
-        router.push({
-            name: 'Reservas',
-            params: { obraId: obra.value.idObra.toString() },
-            query: { sesionId: sesionId.toString() }
-        }).catch(err => {
-            console.error("Error al navegar a reservas:", err);
-        });
-    }
+  if (obra.value) {
+    router
+      .push({
+        name: "Reservas",
+        params: { obraId: obra.value.idObra.toString() },
+        query: { sesionId: sesionId.toString() },
+      })
+      .catch((err) => {
+        console.error("Error al navegar a reservas:", err);
+      });
+  }
 };
 </script>
 
@@ -80,7 +82,7 @@ const navegarAReservas = (sesionId: number) => {
   --details-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
 }
 
-.content{
+.content {
   height: 700px;
 }
 
