@@ -69,28 +69,15 @@ const esAsientoOcupado = (asientoId: number) => {
 
 
     <div class="container">
-      <svg
-        width="100%"
-        height="60vh"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMidYMid meet"
-      >
+      <svg width="100%" height="60vh" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
         <g v-for="row in 6" :key="row">
-          <circle
-            v-for="col in 9"
-            :key="col"
-            :cx="col * 6"
-            :cy="row * 10"
-            r="2"
-            @click="() => seleccionarAsiento(row * 100 + col)"
-            :fill="
-              esAsientoOcupado(row * 100 + col)
+          <circle v-for="col in 9" :key="col" :cx="col * 6" :cy="row * 10" r="2"
+            @click="() => seleccionarAsiento(row * 100 + col)" :fill="esAsientoOcupado(row * 100 + col)
                 ? '#FF6347'
                 : asientosSeleccionados.includes(row * 100 + col)
-                ? '#f1d791'
-                : '#9E9E9E'
-            "
-          />
+                  ? '#f1d791'
+                  : '#9E9E9E'
+              " />
         </g>
       </svg>
     </div>
@@ -219,7 +206,7 @@ const esAsientoOcupado = (asientoId: number) => {
   cursor: pointer;
   font-size: 1rem;
   margin-bottom: 20px;
-  transform: translate(0%,-400%);
+  transform: translate(0%, -400%);
 }
 
 .toIndex-button {

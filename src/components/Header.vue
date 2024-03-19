@@ -1,114 +1,102 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-
 import { onMounted, onUnmounted, ref, reactive } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 let requestId: number | null = null;
 
-
-// CONFIGURACIÓN PARA LA ESTRELLA
 const starConfig = reactive({
-  cx: 0,
-  cy: 0,
-  spikes: 6, // NUMERO DE PUNTAS
-  outerRadius: 20,
-  innerRadius: 6,
-  color: 'yellow'
+    cx: 0,
+    cy: 0,
+    spikes: 5,
+    outerRadius: 20,
+    innerRadius: 10,
+    rotation: 0,
+    color: 'yellow',
 });
 
 const isMouseOverStar = (mouseX: number, mouseY: number) => {
-  const dx = mouseX - starConfig.cx;
-  const dy = mouseY - starConfig.cy;
-  const distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
-  return distanceFromCenter < starConfig.outerRadius;
+    const dx = mouseX - starConfig.cx;
+    const dy = mouseY - starConfig.cy;
+    const distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
+    return distanceFromCenter < starConfig.outerRadius;
 };
 
 const canvasMousemove = (event: MouseEvent) => {
-  if (!canvas.value) return;
+    if (!canvas.value) return;
 
-  const rect = canvas.value.getBoundingClientRect();
-  const mouseX = event.clientX - rect.left;
-  const mouseY = event.clientY - rect.top;
-  starConfig.color = isMouseOverStar(mouseX, mouseY) ? 'orange' : 'yellow';
+    const rect = canvas.value.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    if (isMouseOverStar(mouseX, mouseY)) {
+        starConfig.color = 'orange';
+        starConfig.rotation += 0.05;
+    } else {
+        starConfig.color = 'yellow';
+        starConfig.rotation = 0;
+    }
 };
 
-const drawStar = (ctx: CanvasRenderingContext2D) => {
-  const { cx, cy, spikes, outerRadius, innerRadius } = starConfig;
-  let rot = Math.PI / 2 * 3;
-  let x = cx;
-  let y = cy;
-  let step = Math.PI / spikes;
+const drawStar = (ctx: CanvasRenderingContext2D, cx: number, cy: number, spikes: number, outerRadius: number, innerRadius: number, rotation: number) => {
+    let rot = Math.PI / 2 * 3 + rotation;
+    let x = cx;
+    let y = cy;
+    let step = Math.PI / spikes;
 
-  ctx.beginPath();
-  ctx.moveTo(cx, cy - outerRadius);
-  for (let i = 0; i < spikes; i++) {
-    x = cx + Math.cos(rot) * outerRadius;
-    y = cy + Math.sin(rot) * outerRadius;
-    ctx.lineTo(x, y);
-    rot += step;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - outerRadius);
+    for (let i = 0; i < spikes; i++) {
+        x = cx + Math.cos(rot) * outerRadius;
+        y = cy + Math.sin(rot) * outerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
 
-    x = cx + Math.cos(rot) * innerRadius;
-    y = cy + Math.sin(rot) * innerRadius;
-    ctx.lineTo(x, y);
-    rot += step;
-  }
-  ctx.lineTo(cx, cy - outerRadius);
-  ctx.closePath();
-  ctx.fillStyle = starConfig.color;
-  ctx.fill();
+        x = cx + Math.cos(rot) * innerRadius;
+        y = cy + Math.sin(rot) * innerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+    }
+    ctx.lineTo(cx, cy - outerRadius);
+    ctx.closePath();
+    ctx.fillStyle = starConfig.color;
+    ctx.fill();
 };
 
 const animate = () => {
-  if (canvas.value) {
-    const ctx = canvas.value.getContext('2d');
-    if (ctx) {
-      ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
-      
+    if (canvas.value) {
+        const ctx = canvas.value.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
 
-      // TEXTO "ACTUARTE"
-      ctx.font = "bold 40px Poppins";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "right";
-      ctx.fillText("ACTUARTE", canvas.value.width / 3 * 2, canvas.value.height / 2 + 15);
+            starConfig.cx = canvas.value.width / 2;
+            starConfig.cy = canvas.value.height / 2;
 
-      starConfig.cx = canvas.value.width / 3 - 60;
-      starConfig.cy = canvas.value.height / 2;
-
-      drawStar(ctx);
+            drawStar(ctx, starConfig.cx, starConfig.cy, starConfig.spikes, starConfig.outerRadius, starConfig.innerRadius, starConfig.rotation);
+        }
     }
-  }
-  requestId = requestAnimationFrame(animate);
+    requestId = requestAnimationFrame(animate);
 };
 
 onMounted(() => {
-  starConfig.cx = 150; 
-  starConfig.cy = 50;
-
-  canvas.value?.addEventListener('mousemove', canvasMousemove);
-  requestId = requestAnimationFrame(animate);
+    starConfig.cx = 50;
+    starConfig.cy = 50;
+    canvas.value?.addEventListener('mousemove', canvasMousemove);
+    requestId = requestAnimationFrame(animate);
 });
 
 onUnmounted(() => {
-  canvas.value?.removeEventListener('mousemove', canvasMousemove);
-  if (requestId) {
-    cancelAnimationFrame(requestId);
-  }
+    canvas.value?.removeEventListener('mousemove', canvasMousemove);
+    if (requestId) {
+        cancelAnimationFrame(requestId);
+    }
 });
 </script>
 
-
-
-
-
-
-
 <template>
     <header class="header">
-
-        <canvas ref="canvas" id="logoCanvas" width="640" height="100" class="header__logo-image"></canvas>
-        <a href="index.html" class="header__logo-icon"><img src="../assets/img/LogoIconoSinFondo.png" class="header__logo-icon-image"></a>
+        <canvas ref="canvas" id="logoCanvas" width="700" height="700" class="header__logo-image"></canvas>
+        <a href="index.html" class="header__logo-icon"><img src="../assets/img/LogoIconoSinFondo.png"
+                class="header__logo-icon-image"></a>
 
         <ul class="header__navbar">
             <RouterLink to="/" class="header__nav-item header__nav-item--active" id="sectionHead">Inicio</RouterLink>
@@ -118,14 +106,14 @@ onUnmounted(() => {
 
         <div class="header__main">
             <a href="#" class="header__ticket" id="sectionHead"><i class="ri-coupon-3-fill"></i>Entradas</a>
-            <RouterLink to="/login" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta</RouterLink>
+            <RouterLink to="/login" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta
+            </RouterLink>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>
-    <div class="header-placeholder"></div> <!-- Este es el marcador de posición -->
+    <div class="header-placeholder"></div>
     <div class="scroll"></div>
 </template>
-
 
 
 
@@ -175,7 +163,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header__logo-image {
-    width: 30%;
+  width: 300px;
+  height: 300px; 
+  position: absolute;
 }
 
 .header {
