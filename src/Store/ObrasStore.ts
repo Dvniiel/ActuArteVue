@@ -26,7 +26,7 @@ export const useObrasStore = defineStore("obras", {
     async fetchObras() {
       try {
         const response = await axios.get(
-          "http://alejandroapi.retocsv.es/Obras"
+          "http://localhost:8001/Obras"
         );
         this.obras = response.data;
       } catch (error) {
@@ -40,21 +40,21 @@ export const useObrasStore = defineStore("obras", {
 
     async fetchObrasAclamadas() {
       const response = await axios.get(
-        "http://alejandroapi.retocsv.es/Obras/aclamadas"
+        "http://localhost:8001/Obras/aclamadas"
       );
       this.obras = response.data;
     },
 
     async fetchObrasRecientes() {
       const response = await axios.get(
-        "http://alejandroapi.retocsv.es/Obras/recientes"
+        "http://localhost:8001/Obras/recientes"
       );
       this.obras = response.data;
     },
 
     async fetchUltimasSesiones() {
       const response = await axios.get(
-        "http://alejandroapi.retocsv.es/Obras/ultimasSesiones"
+        "http://localhost:8001/Obras/ultimasSesiones"
       );
       this.obras = response.data;
     },

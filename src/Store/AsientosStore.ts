@@ -10,7 +10,7 @@ export const useAsientosStore = defineStore("asientos", {
     async reservarAsientos(id: number, sesionId: number, asientos: number[]) {
       try {
         await axios.post(
-          `http://alejandroapi.retocsv.es/Obras/${id}/Sesion/${sesionId}`,
+          `http://localhost:8001/Obras/${id}/Sesion/${sesionId}`,
           asientos
         );
         await this.cargarAsientos(id, sesionId);
@@ -22,7 +22,7 @@ export const useAsientosStore = defineStore("asientos", {
     async cargarAsientos(id: number, sesionId: number) {
       try {
         const response = await axios.get(
-          `http://alejandroapi.retocsv.es/Obras/${id}/Session`,
+          `http://localhost:8001/Obras/${id}/Session`,
           { params: { sessionId: sesionId } }
         );
         this.asientosOcupados[`${id}_${sesionId}`] = response.data;

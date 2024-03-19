@@ -10,7 +10,7 @@ export const useLoginStore = defineStore("login", {
     async fetchLogin(nombreusuario: string, passwordUsuario: string) {
       try {
         const response = await axios.post(
-          "http://alejandroapi.retocsv.es/Usuarios/login",
+          "http://localhost:8001/Usuarios/login",
           {
             nombreUsuario: nombreusuario,
             passwordUsuario: passwordUsuario,

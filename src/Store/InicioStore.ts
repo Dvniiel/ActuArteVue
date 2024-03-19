@@ -10,7 +10,7 @@ export const useInicioStore = defineStore("inicio", {
     async fetchObras() {
       try {
         const response = await axios.get(
-          "http://alejandroapi.retocsv.es/Obras"
+          "http://localhost:8001/Obras"
         );
         this.obras = response.data.slice(0, 3);
       } catch (error) {

@@ -20,7 +20,7 @@ export const useDetallesStore = defineStore("detalles", {
     async fetchObra(idObra: string) {
       try {
         const response = await axios.get(
-          `http://alejandroapi.retocsv.es/Obras/${idObra}`
+          `http://localhost:8001/Obras/${idObra}`
         );
         this.obra = response.data as Obra;
       } catch (error) {

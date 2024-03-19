@@ -21,7 +21,7 @@ export const useObrasStore = defineStore("obras", {
     async fetchObras() {
       try {
         const response = await axios.get(
-          "http://alejandroapi.retocsv.es/Obras"
+          "http://localhost:8001/Obras"
         );
         this.obras = response.data;
       } catch (error) {
@@ -50,7 +50,7 @@ export const useObrasStore = defineStore("obras", {
       if (!obraActualizada.idObra) return;
       try {
         await axios.put(
-          `http://alejandroapi.retocsv.es/Obras/${obraActualizada.idObra}`,
+          `http://localhost:8001/Obras/${obraActualizada.idObra}`,
           obraActualizada,
           {
             headers: {
@@ -71,7 +71,7 @@ export const useObrasStore = defineStore("obras", {
 
     async deleteObra(idObra: number) {
       try {
-        await axios.delete(`http://alejandroapi.retocsv.es/Obras/${idObra}`);
+        await axios.delete(`http://localhost:8001/Obras/${idObra}`);
         this.obras = this.obras.filter((obra) => obra.idObra !== idObra);
       } catch (error) {
         console.error("Hubo un error al eliminar la obra: ", error);
