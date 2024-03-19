@@ -106,7 +106,7 @@ onUnmounted(() => {
 
         <div class="header__main">
             <a href="#" class="header__ticket" id="sectionHead"><i class="ri-coupon-3-fill"></i>Entradas</a>
-            <RouterLink to="/login" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta
+            <RouterLink to="/register" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta
             </RouterLink>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>

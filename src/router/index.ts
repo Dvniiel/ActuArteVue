@@ -7,6 +7,7 @@ import LoginView from "../views/LoginView.vue";
 import DetallesView from "../views/DetallesView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import NotFound from "../components/NotFound.vue";
+import RegisterView from '../components/Register.vue';
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterView,
     },
     {
       path: "/detalles",
