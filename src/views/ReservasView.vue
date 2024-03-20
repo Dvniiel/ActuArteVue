@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted, toRefs } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, onMounted, toRefs } from "vue";
+import { useRoute } from "vue-router";
 import { useDetallesStore } from "@/Store/DetallesStore";
-import { useAsientosStore } from '@/Store/AsientosStore';
+import { useAsientosStore } from "@/Store/AsientosStore";
 
 const route = useRoute();
 const detallesStore = useDetallesStore();
@@ -34,8 +34,16 @@ function seleccionarAsiento(asientoId: number) {
 
 // Función para reservar los asientos seleccionados
 const reservarAsientosSeleccionados = async () => {
-  if (obraId.value && sesionId.value && asientosSeleccionados.value.length > 0) {
-    await asientosStore.reservarAsientos(obraId.value, sesionId.value, asientosSeleccionados.value);
+  if (
+    obraId.value &&
+    sesionId.value &&
+    asientosSeleccionados.value.length > 0
+  ) {
+    await asientosStore.reservarAsientos(
+      obraId.value,
+      sesionId.value,
+      asientosSeleccionados.value
+    );
     asientosSeleccionados.value = [];
     await asientosStore.cargarAsientos(obraId.value, sesionId.value);
   }
@@ -43,13 +51,14 @@ const reservarAsientosSeleccionados = async () => {
 
 // Verificar si un asiento está ocupado
 const esAsientoOcupado = (asientoId: number) => {
-  return asientosStore.getAsientosOcupados(obraId.value, sesionId.value).includes(asientoId);
+  return asientosStore
+    .getAsientosOcupados(obraId.value, sesionId.value)
+    .includes(asientoId);
 };
 </script>
 
 <template>
   <div class="reservas-view">
-
     <div class="navigation">
       <RouterLink to="/" class="toIndex-button">Volver al Inicio</RouterLink>
     </div>
@@ -67,27 +76,51 @@ const esAsientoOcupado = (asientoId: number) => {
       <h1>{{ obra.nombreObra }}</h1>
     </div>
 
-
     <div class="container">
-      <svg width="100%" height="60vh" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <svg
+        width="100%"
+        height="60vh"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid meet"
+      >
         <g v-for="row in 6" :key="row">
-          <circle v-for="col in 9" :key="col" :cx="col * 6" :cy="row * 10" r="2"
-            @click="() => seleccionarAsiento(row * 100 + col)" :fill="esAsientoOcupado(row * 100 + col)
-                ? '#FF6347'
-                : asientosSeleccionados.includes(row * 100 + col)
+          <g v-for="col in 9" :key="col">
+            <rect
+              :x="(col - 1) * 11"
+              :y="(row - 1) * 16 + 5"
+              width="10"
+              height="15"
+              rx="2"
+              ry="2"
+              @click="() => seleccionarAsiento(row * 100 + col)"
+              :fill="
+                esAsientoOcupado(row * 100 + col)
+                  ? '#FF6347'
+                  : asientosSeleccionados.includes(row * 100 + col)
                   ? '#f1d791'
                   : '#9E9E9E'
-              " />
+              "
+            />
+            <line
+              :x1="(col - 1) * 11 + 2"
+              :y1="(row - 1) * 16 + 5"
+              :x2="(col - 1) * 11 + 2"
+              :y2="(row - 1) * 16 + 20"
+              stroke-width="1"
+              stroke="var(--dark-color)"
+            />
+          </g>
         </g>
       </svg>
     </div>
 
-    <button @click="reservarAsientosSeleccionados" class="reserve-button">Reservar Asientos</button>
+    <button @click="reservarAsientosSeleccionados" class="reserve-button">
+      Reservar Asientos
+    </button>
 
     <p class="text">
       Has seleccionado <span>{{ asientosSeleccionados.length }}</span> asientos.
     </p>
-
   </div>
 </template>
 
@@ -103,11 +136,11 @@ const esAsientoOcupado = (asientoId: number) => {
   --box-shadow: 0 2rem 3rem var(--dark-color);
 }
 
-
 .container {
   display: flex;
-  transform: translate(5.5%);
+  margin-top: 20px;
 }
+
 
 .seat {
   background-color: var(--bg-color);
@@ -124,8 +157,16 @@ const esAsientoOcupado = (asientoId: number) => {
   background-color: var(--main-color);
 }
 
+.seat.selected rect {
+  fill: var(--main-color);
+}
+
 .seat.occupied {
   background-color: var(--btn-color);
+}
+
+.seat.occupied rect {
+  fill: var(--btn-color);
 }
 
 .showcase {
@@ -206,7 +247,9 @@ const esAsientoOcupado = (asientoId: number) => {
   cursor: pointer;
   font-size: 1rem;
   margin-bottom: 20px;
-  transform: translate(0%, -400%);
+  position: relative;
+  z-index: 10;
+  margin-top: 20px;
 }
 
 .toIndex-button {
