@@ -1,43 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { useLoginStore } from "@/Store/LoginStore";
+import { useRegisterStore } from "@/Store/RegisterStore";
 import { ref } from "vue";
 
+// Define los datos del formulario con reactividad
 const formData = ref({ username: "", password: "" });
 
-const loginStore = useLoginStore();
+// Usa el store de registro
+const registerStore = useRegisterStore();
 
-const login = async () => {
-  try {
-    await loginStore.fetchLogin(
-      formData.value.username,
-      formData.value.password
-    );
-    if (loginStore.obra) {
-      window.location.href = "/dashboard";
-    } else {
-      console.error("Credenciales inválidas");
-    }
-  } catch (error) {
-    console.error("Error al iniciar sesión:", error);
-  }
+// Método para manejar el envío del formulario
+const submitForm = async (e: Event) => {
+  e.preventDefault(); // Previene el comportamiento predeterminado del formulario
+  await registerStore.registrarUsuario(formData.value.username, formData.value.password);
 };
 </script>
-
-
 
 <template>
   <div class="container-login">
     <div class="card">
       <h2>Cuenta Usuario</h2>
-      <form class="form" @submit.prevent="login">
+      <form class="form" @submit.prevent="submitForm">
         <input type="text" placeholder="Usuario" v-model="formData.username" />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          v-model="formData.password"
-        />
-        <button type="submit">Entrar</button>
+        <input type="password" placeholder="Contraseña" v-model="formData.password" />
+        <button type="submit">
+          Registrarse
+        </button>
 
         <p>¿Eres administrador?</p>
         <RouterLink to="/login">Acceder</RouterLink>
@@ -59,7 +47,7 @@ const login = async () => {
 }
 
 .container-login {
-    position: relative;
+  position: relative;
 }
 
 .card {
@@ -112,7 +100,7 @@ const login = async () => {
   font-weight: 500;
 }
 
-.card > h2 {
+.card>h2 {
   font-size: 22px;
   font-weight: 400;
   margin: 0 0 30px;
@@ -125,14 +113,14 @@ const login = async () => {
   gap: 18px;
 }
 
-.form > input,
-.form > button {
+.form>input,
+.form>button {
   width: 100%;
   height: 50px;
   border-radius: 20px;
 }
 
-.form > input {
+.form>input {
   border: 2px solid #e0e0e0;
   font-family: inherit;
   font-size: 16px;
@@ -141,15 +129,15 @@ const login = async () => {
   transition: all 0.375s;
 }
 
-.form > input:hover {
+.form>input:hover {
   border: 2px solid #000;
 }
 
-.form > input::placeholder {
+.form>input::placeholder {
   color: #cac8c8;
 }
 
-.form > button {
+.form>button {
   cursor: pointer;
   width: 100%;
   height: 50px;
@@ -165,7 +153,7 @@ const login = async () => {
   transition: all 0.375s;
 }
 
-.form > button:hover {
+.form>button:hover {
   color: #fff;
   background-color: var(--main-color);
 }

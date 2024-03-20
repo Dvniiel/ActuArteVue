@@ -10,7 +10,7 @@ export const useAsientosStore = defineStore("asientos", {
     async reservarAsientos(id: number, sesionId: number, asientos: number[]) {
       try {
         await axios.post(
-          `http://localhost:8001/Obras/${id}/Sesion/${sesionId}`,
+          `http://localhost:8003/Obras/${id}/Sesion/${sesionId}`,
           asientos
         );
         await this.cargarAsientos(id, sesionId);

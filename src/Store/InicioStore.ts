@@ -10,7 +10,7 @@ export const useInicioStore = defineStore("inicio", {
     async fetchObras() {
       try {
         const response = await axios.get(
-          "http://localhost:8001/Obras"
+          "http://localhost:8003/Obras"
         );
         this.obras = response.data.slice(0, 3);
       } catch (error) {
