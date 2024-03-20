@@ -1,100 +1,94 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, reactive } from 'vue';
-import { RouterLink } from 'vue-router';
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 let requestId: number | null = null;
 
 const starConfig = reactive({
-    cx: 0,
-    cy: 0,
-    spikes: 5,
-    outerRadius: 20,
-    innerRadius: 10,
-    rotation: 0,
-    color: 'yellow',
+  cx: 50, // Centro X del canvas
+  cy: 50, // Centro Y del canvas
+  spikes: 5,
+  outerRadius: 15, // Radio exterior de la estrella
+  innerRadius: 7,  // Radio interior de la estrella
+  rotation: 0,
+  color: 'yellow',
+  rotationSpeed: 0, // Velocidad de rotación inicializada a 0
 });
 
-const isMouseOverStar = (mouseX: number, mouseY: number) => {
-    const dx = mouseX - starConfig.cx;
-    const dy = mouseY - starConfig.cy;
-    const distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
-    return distanceFromCenter < starConfig.outerRadius;
-};
-
-const canvasMousemove = (event: MouseEvent) => {
-    if (!canvas.value) return;
-
-    const rect = canvas.value.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-    if (isMouseOverStar(mouseX, mouseY)) {
-        starConfig.color = 'orange';
-        starConfig.rotation += 0.05;
-    } else {
-        starConfig.color = 'yellow';
-        starConfig.rotation = 0;
-    }
-};
-
 const drawStar = (ctx: CanvasRenderingContext2D, cx: number, cy: number, spikes: number, outerRadius: number, innerRadius: number, rotation: number) => {
-    let rot = Math.PI / 2 * 3 + rotation;
-    let x = cx;
-    let y = cy;
-    let step = Math.PI / spikes;
+  ctx.beginPath();
+  for (let i = 0; i < spikes; i++) {
+    // Coordenadas para el pico exterior
+    const xOuter = cx + Math.cos(rotation + i * 2 * Math.PI / spikes) * outerRadius;
+    const yOuter = cy + Math.sin(rotation + i * 2 * Math.PI / spikes) * outerRadius;
+    ctx.lineTo(xOuter, yOuter);
 
-    ctx.beginPath();
-    ctx.moveTo(cx, cy - outerRadius);
-    for (let i = 0; i < spikes; i++) {
-        x = cx + Math.cos(rot) * outerRadius;
-        y = cy + Math.sin(rot) * outerRadius;
-        ctx.lineTo(x, y);
-        rot += step;
-
-        x = cx + Math.cos(rot) * innerRadius;
-        y = cy + Math.sin(rot) * innerRadius;
-        ctx.lineTo(x, y);
-        rot += step;
-    }
-    ctx.lineTo(cx, cy - outerRadius);
-    ctx.closePath();
-    ctx.fillStyle = starConfig.color;
-    ctx.fill();
+    // Coordenadas para el pico interior
+    const xInner = cx + Math.cos(rotation + (i + 0.5) * 2 * Math.PI / spikes) * innerRadius;
+    const yInner = cy + Math.sin(rotation + (i + 0.5) * 2 * Math.PI / spikes) * innerRadius;
+    ctx.lineTo(xInner, yInner);
+  }
+  ctx.closePath();
+  ctx.fillStyle = starConfig.color;
+  ctx.fill();
 };
 
 const animate = () => {
-    if (canvas.value) {
-        const ctx = canvas.value.getContext('2d');
-        if (ctx) {
-            ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
-
-            starConfig.cx = canvas.value.width / 2;
-            starConfig.cy = canvas.value.height / 2;
-
-            drawStar(ctx, starConfig.cx, starConfig.cy, starConfig.spikes, starConfig.outerRadius, starConfig.innerRadius, starConfig.rotation);
-        }
+  if (canvas.value) {
+    const ctx = canvas.value.getContext('2d');
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
+      starConfig.rotation += starConfig.rotationSpeed;
+      drawStar(ctx, starConfig.cx, starConfig.cy, starConfig.spikes, starConfig.outerRadius, starConfig.innerRadius, starConfig.rotation);
     }
-    requestId = requestAnimationFrame(animate);
+  }
+  requestId = requestAnimationFrame(animate);
+};
+
+const handleMouseEnter = () => {
+  // Iniciar la rotación al entrar en el canvas
+  starConfig.rotationSpeed = 0.05;
+};
+
+const handleMouseLeave = () => {
+  // Detener la rotación al salir del canvas
+  starConfig.rotationSpeed = 0;
+};
+
+const handleMouseMove = (event: MouseEvent) => {
+  if (!canvas.value) return;
+  const ctx = canvas.value.getContext('2d');
+  if (!ctx) return;
+
+  const rect = canvas.value.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+
+  // Asegúrese de que la estrella gire solo si el cursor está realmente sobre ella
+  starConfig.rotationSpeed = ctx.isPointInPath(mouseX, mouseY) ? 0.05 : 0;
 };
 
 onMounted(() => {
-    starConfig.cx = 50;
-    starConfig.cy = 50;
-    canvas.value?.addEventListener('mousemove', canvasMousemove);
-    requestId = requestAnimationFrame(animate);
+  canvas.value?.addEventListener('mouseenter', handleMouseEnter);
+  canvas.value?.addEventListener('mouseleave', handleMouseLeave);
+  canvas.value?.addEventListener('mousemove', handleMouseMove);
+  requestId = requestAnimationFrame(animate);
 });
 
 onUnmounted(() => {
-    canvas.value?.removeEventListener('mousemove', canvasMousemove);
-    if (requestId) {
-        cancelAnimationFrame(requestId);
-    }
+  canvas.value?.removeEventListener('mouseenter', handleMouseEnter);
+  canvas.value?.removeEventListener('mouseleave', handleMouseLeave);
+  canvas.value?.removeEventListener('mousemove', handleMouseMove);
+  if (requestId) {
+    cancelAnimationFrame(requestId);
+  }
 });
 </script>
 
 <template>
     <header class="header">
-        <canvas ref="canvas" id="logoCanvas" width="700" height="700" class="header__logo-image"></canvas>
+        <canvas ref="canvas" width="100" height="100" class="header__logo-image"></canvas>
         <a href="index.html" class="header__logo-icon"><img src="../assets/img/LogoIconoSinFondo.png"
                 class="header__logo-icon-image"></a>
 
@@ -163,8 +157,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header__logo-image {
-  width: 300px;
-  height: 300px; 
+  width: 100px;  /* Ancho del canvas reducido */
+  height: 100px; /* Alto del canvas reducido */
   position: absolute;
 }
 
