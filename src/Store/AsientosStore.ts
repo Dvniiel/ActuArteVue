@@ -22,7 +22,7 @@ export const useAsientosStore = defineStore("asientos", {
     async cargarAsientos(id: number, sesionId: number) {
       try {
         const response = await axios.get(
-          `http://localhost:8001/Obras/${id}/Session`,
+          `http://localhost:8003/Obras/${id}/Session`,
           { params: { sessionId: sesionId } }
         );
         this.asientosOcupados[`${id}_${sesionId}`] = response.data;
