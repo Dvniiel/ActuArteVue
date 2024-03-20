@@ -34,18 +34,15 @@ function seleccionarAsiento(asientoId: number) {
 
 // Función para reservar los asientos seleccionados
 const reservarAsientosSeleccionados = async () => {
-  if (
-    obraId.value &&
-    sesionId.value &&
-    asientosSeleccionados.value.length > 0
-  ) {
-    await asientosStore.reservarAsientos(
-      obraId.value,
-      sesionId.value,
-      asientosSeleccionados.value
-    );
-    asientosSeleccionados.value = [];
-    await asientosStore.cargarAsientos(obraId.value, sesionId.value);
+  if (obraId.value && sesionId.value && asientosSeleccionados.value.length > 0) {
+    try {
+      await asientosStore.reservarAsientos(obraId.value, sesionId.value, asientosSeleccionados.value);
+      alert(`Has reservado ${asientosSeleccionados.value.length} asientos: ${asientosSeleccionados.value.join(', ')}.`);
+      asientosSeleccionados.value = [];
+      await asientosStore.cargarAsientos(obraId.value, sesionId.value);
+    } catch (error) {
+      console.error("Error al reservar asientos:", error);
+    }
   }
 };
 
