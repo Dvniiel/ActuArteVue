@@ -18,13 +18,8 @@
             <p class="reservar-asientos__info">
               ¿Ya has elegido tu asiento?
               <br />
-              Pincha en el botón para acceder a la sección de reservas
+              Pincha en el botón para acceder al menu y reservar una obra
               <br />
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis
-              sed in corrupti cum maxime rem exercitationem, tempora labore
-              similique aperiam illum suscipit ea velit, dolore quisquam illo
-              sunt nemo saepe perspiciatis eos iste fugit est. Quasi commodi
-              eius iste cupiditate!
             </p>
             <RouterLink to="/obras" class="reservar-asientos__button"
               >Reservar</RouterLink
