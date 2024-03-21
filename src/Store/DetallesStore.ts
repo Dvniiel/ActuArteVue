@@ -1,17 +1,16 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
 interface Obra {
   idObra: number;
   nombreObra: string;
-  descObra: string;
   autorObra: string;
   directorObra: string;
   valoracionObra: number;
   duracionObra: number;
 }
 
-export const useDetallesStore = defineStore("detalles", {
+export const useDetallesStore = defineStore('detalles', {
   state: () => ({
     obra: null as Obra | null,
   }),
@@ -19,12 +18,10 @@ export const useDetallesStore = defineStore("detalles", {
   actions: {
     async fetchObra(idObra: string) {
       try {
-        const response = await axios.get(
-          `http://localhost:8003/Obras/${idObra}`
-        );
-        this.obra = response.data as Obra;
+        const response = await axios.get(`http://localhost:8003/Obras/${idObra}`);
+        this.obra = response.data;
       } catch (error) {
-        console.error("Error al obtener los detalles de la obra: ", error);
+        console.error("Error al obtener los detalles de la obra:", error);
       }
     },
   },

@@ -29,13 +29,18 @@ onMounted(() => {
                 {{ obra.descObra }}
               </p>
             </div>
+            <div class="details__card-mid">
+              <p>{{ obra.autorObra }}</p>
+              <p>{{ obra.valoracionObra }} de valoracion</p>
+              <p>{{ obra.directorObra }}</p>
+              <p>{{ obra.duracionObra }} minutos</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
   </div>
 </template>
-
 
 <style>
 :root {
@@ -51,7 +56,7 @@ onMounted(() => {
   --details-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
 }
 
-.content{
+.content {
   width: 50%;
 }
 
@@ -101,4 +106,3 @@ onMounted(() => {
   background-color: var(--primary-color);
 }
 </style>
-

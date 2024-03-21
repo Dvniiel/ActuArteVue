@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, toRefs } from "vue";
+import { ref, onMounted, toRefs, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useDetallesStore } from "@/Store/DetallesStore";
 import { useAsientosStore } from "@/Store/AsientosStore";
@@ -9,6 +9,15 @@ const detallesStore = useDetallesStore();
 const { obra } = toRefs(detallesStore);
 const obraId = ref(Number(route.params.obraId));
 const sesionId = ref(Number(route.query.sesionId));
+
+const asientosTotales = 54; // Total de asientos por sesión
+
+const asientosDisponibles = computed(() => {
+  const ocupados = asientosStore.getAsientosOcupadosCount(obraId.value, sesionId.value);
+  return asientosTotales - ocupados;
+});
+
+
 
 const asientosStore = useAsientosStore();
 const asientosSeleccionados = ref<number[]>([]);
