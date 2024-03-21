@@ -12,7 +12,7 @@ export const useInicioStore = defineStore("inicio", {
         const response = await axios.get(
           "http://localhost:8003/Obras"
         );
-        this.obras = response.data.slice(0, 3);
+        this.obras = response.data.slice(13, 16);
       } catch (error) {
         console.error("Error al obtener las obras: ", error);
       }

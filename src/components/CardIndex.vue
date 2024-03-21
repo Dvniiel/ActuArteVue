@@ -133,4 +133,41 @@ onMounted(() => {
   color: #ffffff;
   box-shadow: var(--box-shadow);
 }
+
+.obras-index {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of items */
+  justify-content: space-around;
+  margin-bottom: 70px;
+}
+
+.obra {
+  display: flex; /* Changed from grid to flex for simpler control */
+  flex-direction: column; /* Stack items vertically */
+  text-align: center;
+  gap: 3rem;
+  width: 33%; /* Default width */
+  background-color: var(--text-color);
+  padding: 2rem 3rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+
+
+
+@media (max-width: 768px) { 
+  .obras-index {
+    justify-content: center;
+  }
+
+  .obra {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .container-img img {
+    width: 90%;
+  }
+}
 </style>
