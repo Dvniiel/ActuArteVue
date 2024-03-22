@@ -15,15 +15,17 @@ export interface Obra {
 export const useObrasStore = defineStore("obras", {
   state: () => ({
     obras: [] as Obra[],
+    isLoaded: false
   }),
 
   actions: {
-    async fetchObras() {
+    async fetchObras(force = false) {
+      if (this.isLoaded && !force) return;
+
       try {
-        const response = await axios.get(
-          "http://localhost:8003/Obras"
-        );
+        const response = await axios.get("http://localhost:8003/Obras");
         this.obras = response.data;
+        this.isLoaded = true;
       } catch (error) {
         console.error("Hubo un error al obtener las obras: ", error);
       }

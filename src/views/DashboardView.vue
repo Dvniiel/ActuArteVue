@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useObrasStore, type Obra } from "@/Store/DashboardStore";
 
+type ObraEditable = Omit<Obra, 'idObra'> & { idObra?: number };
+
 const obrasStore = useObrasStore();
-onMounted(() => {
-  obrasStore.fetchObras();
+
+onMounted(async () => {
+  if (!obrasStore.isLoaded) {
+    await obrasStore.fetchObras(true);
+  }
 });
 
-const defaultObra = {
+const defaultObra = ref({
   nombreObra: "",
   valoracionObra: 0,
   autorObra: "",
@@ -15,20 +20,22 @@ const defaultObra = {
   duracionObra: "",
   descObra: "",
   imagen: "",
-};
+});
 
-const obraSeleccionada = ref({ ...defaultObra });
+const obraSeleccionada = ref<ObraEditable>({ ...defaultObra.value });
+
 const modoFormulario = ref("");
 
+// Considera usar una función computada para obras
 const obras = computed(() => obrasStore.obras);
+
+function handleAdd() {
+  obraSeleccionada.value = { ...defaultObra.value };
+  modoFormulario.value = "añadir";
+}
 
 function handleDelete(idObra: number) {
   obrasStore.deleteObra(idObra);
-}
-
-function handleAdd() {
-  obraSeleccionada.value = { ...defaultObra };
-  modoFormulario.value = "añadir";
 }
 
 function handleEdit(obra: Obra) {
@@ -36,18 +43,24 @@ function handleEdit(obra: Obra) {
   modoFormulario.value = "editar";
 }
 
-function handleSubmit() {
-  if (modoFormulario.value === "añadir") {
-    obrasStore.addObra({ ...obraSeleccionada.value });
-  } else if (modoFormulario.value === "editar") {
-    obrasStore.updateObra(obraSeleccionada.value);
+async function handleSubmit() {
+  try {
+    if (modoFormulario.value === "añadir") {
+      await obrasStore.addObra(obraSeleccionada.value);
+    } else if (modoFormulario.value === "editar" && obraSeleccionada.value.idObra) {
+      await obrasStore.updateObra(obraSeleccionada.value);
+    } else {
+      console.error("La obra seleccionada no tiene un ID válido.");
+    }
+    obraSeleccionada.value = { ...defaultObra.value };
+    modoFormulario.value = "";
+  } catch (error) {
+    console.error("Error al procesar el formulario: ", error);
   }
-  obraSeleccionada.value = { ...defaultObra };
-  modoFormulario.value = "";
 }
 
 function handleCancel() {
-  obraSeleccionada.value = { ...defaultObra };
+  obraSeleccionada.value = { ...defaultObra.value };
   modoFormulario.value = "";
 }
 </script>
