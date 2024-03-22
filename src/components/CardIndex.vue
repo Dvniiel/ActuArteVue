@@ -5,7 +5,7 @@ import { useInicioStore } from "@/Store/InicioStore";
 const inicioStore = useInicioStore();
 
 onMounted(() => {
-  inicioStore.fetchObras();
+  inicioStore.fetchObras(true);
 });
 </script>
 

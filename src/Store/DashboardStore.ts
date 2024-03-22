@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
 export interface Obra {
   idObra?: number;
@@ -12,35 +12,32 @@ export interface Obra {
   imagen: string;
 }
 
-export const useObrasStore = defineStore("obras", {
+export const useDashboardStore = defineStore('dashboard', {
   state: () => ({
     obras: [] as Obra[],
-    isLoaded: false
+    isLoaded: false,
   }),
 
   actions: {
     async fetchObras(force = false) {
       if (this.isLoaded && !force) return;
-
       try {
-        const response = await axios.get("http://localhost:8003/Obras");
+        const response = await axios.get('http://localhost:8003/Obras');
         this.obras = response.data;
         this.isLoaded = true;
       } catch (error) {
-        console.error("Hubo un error al obtener las obras: ", error);
+        console.error('Hubo un error al obtener las obras: ', error);
       }
     },
 
-    async addObra(nuevaObra: Omit<Obra, "idObra">) {
+    async addObra(nuevaObra: Omit<Obra, 'idObra'>) {
       try {
-        const response = await axios.post("http://localhost:8003/Obras", nuevaObra, {
-          headers: {
-            "Content-Type": "application/json",
-          },
+        await axios.post('http://localhost:8003/Obras', nuevaObra, {
+          headers: { 'Content-Type': 'application/json' },
         });
-        this.obras.push(response.data);
+        await this.fetchObras(true); // Recargar obras después de añadir
       } catch (error) {
-        console.error("Hubo un error al añadir la obra: ", error);
+        console.error('Hubo un error al añadir la obra: ', error);
         throw error;
       }
     },
@@ -49,26 +46,21 @@ export const useObrasStore = defineStore("obras", {
       if (!obraActualizada.idObra) return;
       try {
         await axios.put(`http://localhost:8003/Obras/${obraActualizada.idObra}`, obraActualizada, {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { 'Content-Type': 'application/json' },
         });
-        const index = this.obras.findIndex(obra => obra.idObra === obraActualizada.idObra);
-        if (index !== -1) {
-          this.obras[index] = obraActualizada;
-        }
+        await this.fetchObras(true); // Recargar obras después de actualizar
       } catch (error) {
-        console.error("Hubo un error al actualizar la obra: ", error);
-        throw error; // Lanza el error para manejarlo más adelante si es necesario.
+        console.error('Hubo un error al actualizar la obra: ', error);
+        throw error;
       }
     },
 
     async deleteObra(idObra: number) {
       try {
         await axios.delete(`http://localhost:8003/Obras/${idObra}`);
-        this.obras = this.obras.filter((obra) => obra.idObra !== idObra);
+        await this.fetchObras(true); // Recargar obras después de eliminar
       } catch (error) {
-        console.error("Hubo un error al eliminar la obra: ", error);
+        console.error('Hubo un error al eliminar la obra: ', error);
       }
     },
   },

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import { useObrasStore, type Obra } from "@/Store/DashboardStore";
+import { useDashboardStore , type Obra } from "@/Store/DashboardStore";
 
 type ObraEditable = Omit<Obra, 'idObra'> & { idObra?: number };
 
-const obrasStore = useObrasStore();
+const obrasStore = useDashboardStore ();
 
 onMounted(async () => {
   if (!obrasStore.isLoaded) {
-    await obrasStore.fetchObras(true);
+    obrasStore.fetchObras(true);
   }
 });
 
@@ -26,7 +26,6 @@ const obraSeleccionada = ref<ObraEditable>({ ...defaultObra.value });
 
 const modoFormulario = ref("");
 
-// Considera usar una función computada para obras
 const obras = computed(() => obrasStore.obras);
 
 function handleAdd() {
@@ -47,15 +46,21 @@ async function handleSubmit() {
   try {
     if (modoFormulario.value === "añadir") {
       await obrasStore.addObra(obraSeleccionada.value);
+      console.log("Obra añadida correctamente.");
     } else if (modoFormulario.value === "editar" && obraSeleccionada.value.idObra) {
       await obrasStore.updateObra(obraSeleccionada.value);
+      console.log("Obra actualizada correctamente.");
     } else {
       console.error("La obra seleccionada no tiene un ID válido.");
+      return; // Salimos de la función si no hay un ID válido
     }
-    obraSeleccionada.value = { ...defaultObra.value };
-    modoFormulario.value = "";
+    // Recargamos las obras para reflejar los cambios
+    await obrasStore.fetchObras(true);
   } catch (error) {
     console.error("Error al procesar el formulario: ", error);
+  } finally {
+    obraSeleccionada.value = { ...defaultObra.value };
+    modoFormulario.value = "";
   }
 }
 
