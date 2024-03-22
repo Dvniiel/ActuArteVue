@@ -21,7 +21,7 @@ export const useRegisterStore = defineStore('register', () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8003/Usuarios', datosRegistro);
+      const response = await axios.post('http://localhost:8003/Credenciales/register', datosRegistro);
       usuario.value = response.data;
       if (response) {
         router.push('/');

@@ -32,6 +32,8 @@ const fetchUltimasSesiones = () => {
 
 <template>
     <div class="header-placeholder"></div>
+
+    <img class="wave-2" src="../assets/img/wave2 copia.png" ref="arrowFinal" alt="">
     <section class="container top-products">
         <div class="container-options">
 
@@ -39,13 +41,9 @@ const fetchUltimasSesiones = () => {
             <button id="aclamadas" @click="fetchObrasAclamadas"><span>Mas aclamadas</span></button>
             <button id="recientes" @click="fetchObrasRecientes"><span>Recientes</span></button>
         </div>
-        <div>
-            <i id="arrow" class="ri-arrow-down-line" @click="scrollToImage"></i>
-        </div>
     </section>
 
-    <img class="wave-1" src="../assets/img/wave1 copia.png" alt="">
-    <img class="wave-2" src="../assets/img/wave2 copia.png" ref="arrowFinal" alt="">
+    
 
 </template>
 
@@ -57,8 +55,11 @@ const fetchUltimasSesiones = () => {
     background-color: #C2BAAA;
 }
 
+.wave-2{
+    margin-bottom: 200px;
+}
+
 .top-products {
-    margin-top: 250vh;
     display: flex;
     flex-direction: column;
     gap: 2rem;

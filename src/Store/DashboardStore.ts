@@ -31,41 +31,33 @@ export const useObrasStore = defineStore("obras", {
 
     async addObra(nuevaObra: Omit<Obra, "idObra">) {
       try {
-        const response = await axios.post(
-          "http://localhost:8003/Obras",
-          nuevaObra,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.post("http://localhost:8003/Obras", nuevaObra, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         this.obras.push(response.data);
       } catch (error) {
         console.error("Hubo un error al añadir la obra: ", error);
+        throw error;
       }
     },
 
     async updateObra(obraActualizada: Obra) {
       if (!obraActualizada.idObra) return;
       try {
-        await axios.put(
-          `http://localhost:8003/Obras/${obraActualizada.idObra}`,
-          obraActualizada,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const index = this.obras.findIndex(
-          (obra) => obra.idObra === obraActualizada.idObra
-        );
+        await axios.put(`http://localhost:8003/Obras/${obraActualizada.idObra}`, obraActualizada, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const index = this.obras.findIndex(obra => obra.idObra === obraActualizada.idObra);
         if (index !== -1) {
           this.obras[index] = obraActualizada;
         }
       } catch (error) {
         console.error("Hubo un error al actualizar la obra: ", error);
+        throw error; // Lanza el error para manejarlo más adelante si es necesario.
       }
     },
 
