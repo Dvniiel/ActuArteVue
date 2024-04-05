@@ -26,7 +26,7 @@ export const useObrasStore = defineStore("obras", {
     async fetchObras() {
       try {
         const response = await axios.get(
-          "http://localhost:8003/Obras"
+          "http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras"
         );
         this.obras = response.data;
       } catch (error) {
@@ -40,21 +40,21 @@ export const useObrasStore = defineStore("obras", {
 
     async fetchObrasAclamadas() {
       const response = await axios.get(
-        "http://localhost:8003/Obras/aclamadas"
+        "http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/aclamadas"
       );
       this.obras = response.data;
     },
 
     async fetchObrasRecientes() {
       const response = await axios.get(
-        "http://localhost:8003/Obras/recientes"
+        "http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/recientes"
       );
       this.obras = response.data;
     },
 
     async fetchUltimasSesiones() {
       const response = await axios.get(
-        "http://localhost:8003/Obras/ultimasSesiones"
+        "http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/ultimasSesiones"
       );
       this.obras = response.data;
     },

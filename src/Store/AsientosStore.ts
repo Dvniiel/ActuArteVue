@@ -9,7 +9,7 @@ export const useAsientosStore = defineStore('asientos', {
   actions: {
     async reservarAsientos(id: number, sesionId: number, asientos: number[]) {
       try {
-        const response = await axios.post(`http://localhost:8003/Obras/${id}/Sesion/${sesionId}`, asientos);
+        const response = await axios.post(`http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/${id}/Sesion/${sesionId}`, asientos);
         console.log('Reserva exitosa', response.data);
         await this.cargarAsientos(id, sesionId); // Asegúrate de recargar los asientos ocupados después de reservar.
       } catch (error) {
@@ -19,7 +19,7 @@ export const useAsientosStore = defineStore('asientos', {
 
     async cargarAsientos(id: number, sesionId: number) {
       try {
-        const response = await axios.get(`http://localhost:8003/Obras/${id}/Session`, { params: { sessionId: sesionId } });
+        const response = await axios.get(`http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/${id}/Session`, { params: { sessionId: sesionId } });
         this.asientosOcupados[`${id}_${sesionId}`] = response.data;
       } catch (error) {
         console.error('Error al cargar asientos:', error);

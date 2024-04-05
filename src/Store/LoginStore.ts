@@ -18,7 +18,7 @@ export const useLoginStore = defineStore("login", {
     async fetchLogin(nombreusuario: string, passwordUsuario: string) {
       try {
         const response = await axios.post(
-          "http://localhost:8003/Credenciales/login",
+          "http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Credenciales/login",
           {
             nombreUsuario: nombreusuario,
             passwordUsuario: passwordUsuario,

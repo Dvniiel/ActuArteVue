@@ -22,7 +22,7 @@ export const useDashboardStore = defineStore('dashboard', {
     async fetchObras(force = false) {
       if (this.isLoaded && !force) return;
       try {
-        const response = await axios.get('http://localhost:8003/Obras');
+        const response = await axios.get('http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras');
         this.obras = response.data;
         this.isLoaded = true;
       } catch (error) {
@@ -32,7 +32,7 @@ export const useDashboardStore = defineStore('dashboard', {
 
     async addObra(nuevaObra: Omit<Obra, 'idObra'>) {
       try {
-        await axios.post('http://localhost:8003/Obras', nuevaObra, {
+        await axios.post('http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras', nuevaObra, {
           headers: { 'Content-Type': 'application/json' },
         });
         await this.fetchObras(true); // Recargar obras después de añadir
@@ -45,7 +45,7 @@ export const useDashboardStore = defineStore('dashboard', {
     async updateObra(obraActualizada: Obra) {
       if (!obraActualizada.idObra) return;
       try {
-        await axios.put(`http://localhost:8003/Obras/${obraActualizada.idObra}`, obraActualizada, {
+        await axios.put(`http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/${obraActualizada.idObra}`, obraActualizada, {
           headers: { 'Content-Type': 'application/json' },
         });
         await this.fetchObras(true); // Recargar obras después de actualizar
@@ -57,7 +57,7 @@ export const useDashboardStore = defineStore('dashboard', {
 
     async deleteObra(idObra: number) {
       try {
-        await axios.delete(`http://localhost:8003/Obras/${idObra}`);
+        await axios.delete(`http://ad59716b915d74f619fe1dde0e2ca2c7-864283579.us-east-1.elb.amazonaws.com/Obras/${idObra}`);
         await this.fetchObras(true); // Recargar obras después de eliminar
       } catch (error) {
         console.error('Hubo un error al eliminar la obra: ', error);
