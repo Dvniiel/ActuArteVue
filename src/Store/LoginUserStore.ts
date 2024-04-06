@@ -2,6 +2,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import router from "@/router";
+import { useUserStore } from './UserStore';
 
 interface Usuario {
   idUsuario: number;
@@ -26,16 +27,37 @@ export const useLoginUserStore = defineStore("loginUser", {
         );
         this.usuario = response.data;
 
-        // Si no es admin, redirigir a la pantalla principal
-        if (!this.usuario.isAdmin) {
-          router.push("/");
+        // Establece la información del usuario en UserStore
+        const userStore = useUserStore();
+        userStore.setUser(this.usuario);
+
+        // Redirige al usuario según si es administrador o no
+        if (this.usuario.isAdmin) {
+          router.push('/dashboard');
         } else {
-          // Si es admin, por alguna razón se logueó aquí, redirigir al dashboard
-          router.push("/dashboard");
+          router.push('/');
         }
       } catch (error) {
-        console.error("Error al iniciar sesión: ", error);
-        alert("Credenciales inválidas o error de conexión");
+        console.error('Error al iniciar sesión: ', error);
+        alert('Credenciales inválidas o error de conexión');
+      }
+    },
+
+    logoutUser() {
+      // Limpia la información del usuario y redirige a la página de inicio de sesión
+      this.usuario = null;
+      const userStore = useUserStore();
+      userStore.clearUser();
+      router.push('/login');
+    },
+
+    checkLoginStatus() {
+      // Verifica si hay datos de sesión guardados (puedes usar localStorage o cookies)
+      const userData = localStorage.getItem('userData');
+      if (userData) {
+        this.usuario = JSON.parse(userData);
+        const userStore = useUserStore();
+        userStore.setUser(this.usuario);
       }
     },
   },

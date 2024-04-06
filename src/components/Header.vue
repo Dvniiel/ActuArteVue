@@ -1,6 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, reactive } from 'vue';
+import { useUserStore } from "@/Store/UserStore";
+
+const userStore = useUserStore();
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 let requestId: number | null = null;
@@ -95,9 +98,12 @@ onUnmounted(() => {
         </ul>
 
         <div class="header__main">
-            
-
-            <RouterLink to="/register" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta
+            <!-- Mostrar nombre del usuario o link para registrarse/iniciar sesión -->
+            <RouterLink v-if="userStore.isLoggedIn" to="/" class="header__nav-item">
+                <i class="ri-user-line"></i>{{ userStore.nombreUsuario }}
+            </RouterLink>
+            <RouterLink v-else to="/login" class="header__nav-item">
+                <i class="ri-user-line"></i>Iniciar Sesión
             </RouterLink>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
