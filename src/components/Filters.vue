@@ -3,16 +3,8 @@
 import { ref } from 'vue';
 import { useObrasStore } from '@/Store/ObrasStore';
 
-
-
 const obrasStore = useObrasStore();
 
-const arrowFinal = ref(null);
-
-
-const scrollToImage = () => {
-    arrowFinal.value.scrollIntoView({ behavior: 'smooth' });
-};
 
 const fetchObrasAclamadas = () => {
     obrasStore.fetchObrasAclamadas();

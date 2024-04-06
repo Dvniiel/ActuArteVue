@@ -6,25 +6,23 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 let requestId: number | null = null;
 
 const starConfig = reactive({
-  cx: 50, // Centro X del canvas
-  cy: 50, // Centro Y del canvas
+  cx: 50,
+  cy: 50,
   spikes: 5,
-  outerRadius: 15, // Radio exterior de la estrella
-  innerRadius: 7,  // Radio interior de la estrella
+  outerRadius: 15,
+  innerRadius: 7,
   rotation: 0,
   color: 'yellow',
-  rotationSpeed: 0, // Velocidad de rotación inicializada a 0
+  rotationSpeed: 0,
 });
 
 const drawStar = (ctx: CanvasRenderingContext2D, cx: number, cy: number, spikes: number, outerRadius: number, innerRadius: number, rotation: number) => {
   ctx.beginPath();
   for (let i = 0; i < spikes; i++) {
-    // Coordenadas para el pico exterior
     const xOuter = cx + Math.cos(rotation + i * 2 * Math.PI / spikes) * outerRadius;
     const yOuter = cy + Math.sin(rotation + i * 2 * Math.PI / spikes) * outerRadius;
     ctx.lineTo(xOuter, yOuter);
 
-    // Coordenadas para el pico interior
     const xInner = cx + Math.cos(rotation + (i + 0.5) * 2 * Math.PI / spikes) * innerRadius;
     const yInner = cy + Math.sin(rotation + (i + 0.5) * 2 * Math.PI / spikes) * innerRadius;
     ctx.lineTo(xInner, yInner);
@@ -47,12 +45,10 @@ const animate = () => {
 };
 
 const handleMouseEnter = () => {
-  // Iniciar la rotación al entrar en el canvas
   starConfig.rotationSpeed = 0.05;
 };
 
 const handleMouseLeave = () => {
-  // Detener la rotación al salir del canvas
   starConfig.rotationSpeed = 0;
 };
 
@@ -65,7 +61,6 @@ const handleMouseMove = (event: MouseEvent) => {
   const mouseX = event.clientX - rect.left;
   const mouseY = event.clientY - rect.top;
 
-  // Asegúrese de que la estrella gire solo si el cursor está realmente sobre ella
   starConfig.rotationSpeed = ctx.isPointInPath(mouseX, mouseY) ? 0.05 : 0;
 };
 
@@ -95,12 +90,12 @@ onUnmounted(() => {
         <ul class="header__navbar">
             <RouterLink to="/" class="header__nav-item header__nav-item--active" id="sectionHead">Inicio</RouterLink>
             <RouterLink to="/obras" class="header__nav-item" id="sectionHead">Obras</RouterLink>
-            <RouterLink to="/reservas" class="header__nav-item" id="sectionHead">Reservas</RouterLink>
+            <RouterLink to="/tickets" class="header__nav-item" id="sectionHead">Entradas
+            </RouterLink>
         </ul>
 
         <div class="header__main">
-            <RouterLink to="/tickets" class="header__nav-item" id="sectionHead"><i class="ri-coupon-3-fill"></i>Entradas
-            </RouterLink>
+            
 
             <RouterLink to="/register" class="header__nav-item" id="sectionHead"><i class="ri-user-line"></i>Cuenta
             </RouterLink>

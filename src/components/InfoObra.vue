@@ -13,7 +13,6 @@ const obra = computed(() => detallesStore.obra);
 
 
 
-// Cargar los datos de la obra y los asientos al montar el componente
 onMounted(() => {
   if (obraId.value) {
     detallesStore.fetchObra(obraId.value.toString());

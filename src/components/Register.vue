@@ -3,15 +3,12 @@
 import { useRegisterStore } from "@/Store/RegisterStore";
 import { ref } from "vue";
 
-// Define los datos del formulario con reactividad
 const formData = ref({ username: "", password: "" });
 
-// Usa el store de registro
 const registerStore = useRegisterStore();
 
-// Método para manejar el envío del formulario
 const submitForm = async (e: Event) => {
-  e.preventDefault(); // Previene el comportamiento predeterminado del formulario
+  e.preventDefault();
   await registerStore.registrarUsuario(formData.value.username, formData.value.password);
 };
 </script>
