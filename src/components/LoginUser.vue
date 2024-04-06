@@ -1,15 +1,15 @@
-<!-- eslint-disable vue/multi-word-component-names -->
-<script setup lang="ts">
-import { useRegisterStore } from "@/Store/RegisterStore";
+<script setup>
+import { useLoginUserStore } from "@/Store/LoginUserStore";
 import { ref } from "vue";
 
 const formData = ref({ username: "", password: "" });
+const loginUserStore = useLoginUserStore();
 
-const registerStore = useRegisterStore();
-
-const submitForm = async (e: Event) => {
-  e.preventDefault();
-  await registerStore.registrarUsuario(formData.value.username, formData.value.password);
+const login = async () => {
+  await loginUserStore.loginUser(
+    formData.value.username,
+    formData.value.password
+  );
 };
 </script>
 
@@ -17,20 +17,17 @@ const submitForm = async (e: Event) => {
   <div class="container-login">
     <div class="card">
       <h2>Cuenta Usuario</h2>
-      <form class="form" @submit.prevent="submitForm">
+      <form class="form" @submit.prevent="login">
         <input type="text" placeholder="Usuario" v-model="formData.username" />
-        <input type="password" placeholder="Contraseña" v-model="formData.password" />
-        <button type="submit">
-          Registrarse
-        </button>
+        <input
+          type="password"
+          placeholder="Contraseña"
+          v-model="formData.password"
+        />
+        <button type="submit">Entrar</button>
 
-        <p>¿Tienes cuenta?</p>
-        <RouterLink to="/loginUser">Logearse</RouterLink>
-
-        <p>¿Eres administrador?</p>
-        <RouterLink to="/login">Acceder</RouterLink>
-
-
+        <p>¿No tienes cuenta?</p>
+        <RouterLink to="/register">Registro</RouterLink>
       </form>
     </div>
   </div>
@@ -49,7 +46,7 @@ const submitForm = async (e: Event) => {
 }
 
 .container-login {
-  position: relative;
+    position: relative;
 }
 
 .card {
@@ -102,7 +99,7 @@ const submitForm = async (e: Event) => {
   font-weight: 500;
 }
 
-.card>h2 {
+.card > h2 {
   font-size: 22px;
   font-weight: 400;
   margin: 0 0 30px;
@@ -115,14 +112,14 @@ const submitForm = async (e: Event) => {
   gap: 18px;
 }
 
-.form>input,
-.form>button {
+.form > input,
+.form > button {
   width: 100%;
   height: 50px;
   border-radius: 20px;
 }
 
-.form>input {
+.form > input {
   border: 2px solid #e0e0e0;
   font-family: inherit;
   font-size: 16px;
@@ -131,15 +128,15 @@ const submitForm = async (e: Event) => {
   transition: all 0.375s;
 }
 
-.form>input:hover {
+.form > input:hover {
   border: 2px solid #000;
 }
 
-.form>input::placeholder {
+.form > input::placeholder {
   color: #cac8c8;
 }
 
-.form>button {
+.form > button {
   cursor: pointer;
   width: 100%;
   height: 50px;
@@ -155,8 +152,9 @@ const submitForm = async (e: Event) => {
   transition: all 0.375s;
 }
 
-.form>button:hover {
+.form > button:hover {
   color: #fff;
   background-color: var(--main-color);
 }
 </style>
+

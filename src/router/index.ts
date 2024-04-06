@@ -4,11 +4,12 @@ import ObrasView from "@/views/ObrasView.vue";
 import ReservasView from "../views/ReservasView.vue";
 import ContactoView from "../views/ContactoView.vue";
 import LoginView from "../views/LoginView.vue";
+import LoginUserView from "../views/LoginUserView.vue";
 import DetallesView from "../views/DetallesView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import NotFound from "../components/NotFound.vue";
-import RegisterView from '../components/Register.vue';
-import TicketsView from '../views/TicketsView.vue'
+import RegisterView from '../views/RegisterView.vue';
+import TicketsView from '../views/TicketsView.vue';
 
 const routes = [
   {
@@ -50,6 +51,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView,
+    },
+    {
+      path: "/loginUser",
+      name: "loginUser",
+      component: LoginUserView,
     },
     {
       path: "/register",

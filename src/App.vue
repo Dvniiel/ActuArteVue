@@ -9,7 +9,7 @@ import Footer from '@/components/Footer.vue';
 
 const route = useRoute();
 
-const showHeaderAndFooter = computed(() => ![ 'NotFound', 'dashboard', 'login', 'register' ].includes(route.name));
+const showHeaderAndFooter = computed(() => ![ 'NotFound', 'dashboard', 'login', 'register', 'loginUser' ].includes(route.name));
 </script>
 
 <template>
