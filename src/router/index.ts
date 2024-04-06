@@ -8,7 +8,7 @@ import DetallesView from "../views/DetallesView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import NotFound from "../components/NotFound.vue";
 import RegisterView from '../components/Register.vue';
-import TicketsView from '../components/Tickets.vue'
+import TicketsView from '../views/TicketsView.vue'
 
 const routes = [
   {

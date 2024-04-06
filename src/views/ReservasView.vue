@@ -3,24 +3,31 @@ import { ref, onMounted, toRefs, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useDetallesStore } from "@/Store/DetallesStore";
 import { useAsientosStore } from "@/Store/AsientosStore";
+import { useReservasStore } from "@/Store/ReservasStore";
 
 const route = useRoute();
 const detallesStore = useDetallesStore();
 const { obra } = toRefs(detallesStore);
 const obraId = ref(Number(route.params.obraId));
 const sesionId = ref(Number(route.query.sesionId));
-
 const asientosTotales = 54; // Total de asientos por sesión
+const asientosStore = useAsientosStore();
+const asientosSeleccionados = ref<number[]>([]);
 
 const asientosDisponibles = computed(() => {
-  const ocupados = asientosStore.getAsientosOcupadosCount(obraId.value, sesionId.value);
+  const ocupados = asientosStore.getAsientosOcupadosCount(
+    obraId.value,
+    sesionId.value
+  );
   return asientosTotales - ocupados;
 });
 
 
+// Calcular precio total asientos
+const precioTotal = computed(() => {
+  return asientosSeleccionados.value.length * 10;
+});
 
-const asientosStore = useAsientosStore();
-const asientosSeleccionados = ref<number[]>([]);
 
 onMounted(async () => {
   if (obraId.value) {
@@ -31,7 +38,8 @@ onMounted(async () => {
   }
 });
 
-// Función para seleccionar/deseleccionar asientos
+
+// seleccionar asientos
 function seleccionarAsiento(asientoId: number) {
   const index = asientosSeleccionados.value.indexOf(asientoId);
   if (index === -1) {
@@ -39,28 +47,49 @@ function seleccionarAsiento(asientoId: number) {
   } else {
     asientosSeleccionados.value.splice(index, 1);
   }
+  console.log(
+    `Asientos seleccionados: ${asientosSeleccionados.value.length}, Precio total: ${precioTotal.value}`
+  );
 }
 
-// Función para reservar los asientos seleccionados
+
+//reservar los asientos
 const reservarAsientosSeleccionados = async () => {
-  if (obraId.value && sesionId.value && asientosSeleccionados.value.length > 0) {
-    try {
-      await asientosStore.reservarAsientos(obraId.value, sesionId.value, asientosSeleccionados.value);
-      alert(`Has reservado ${asientosSeleccionados.value.length} asientos: ${asientosSeleccionados.value.join(', ')}.`);
-      asientosSeleccionados.value = [];
-      await asientosStore.cargarAsientos(obraId.value, sesionId.value);
-    } catch (error) {
-      console.error("Error al reservar asientos:", error);
-    }
+  if (!obraId.value || !sesionId.value || asientosSeleccionados.value.length === 0 || obra.value === null) {
+    alert("No se ha podido cargar la información de la obra o no se han seleccionado asientos.");
+    return;
+  }
+
+  try {
+    // Suponiendo que el método reservarAsientos existe y funciona correctamente
+    await asientosStore.reservarAsientos(obraId.value, sesionId.value, asientosSeleccionados.value);
+
+    const reserva = {
+      obra: obra.value.nombreObra,  // Ahora es seguro acceder a nombreObra porque ya verificamos que obra.value no es null
+      sesion: sesionId.value,
+      numAsientos: asientosSeleccionados.value.length,
+      precio: precioTotal.value,
+      fecha: new Date().toISOString()
+    };
+
+    const reservasStore = useReservasStore();
+    reservasStore.addReserva(reserva);
+
+    alert(`Has reservado ${reserva.numAsientos} asientos para la obra '${reserva.obra}' en la sesión ${reserva.sesion}, por un total de ${reserva.precio} euros.`);
+    asientosSeleccionados.value = [];
+    await asientosStore.cargarAsientos(obraId.value, sesionId.value);
+  } catch (error) {
+    console.error("Error al reservar asientos:", error);
   }
 };
 
-// Verificar si un asiento está ocupado
 const esAsientoOcupado = (asientoId: number) => {
   return asientosStore
     .getAsientosOcupados(obraId.value, sesionId.value)
     .includes(asientoId);
 };
+
+
 </script>
 
 <template>
@@ -78,9 +107,12 @@ const esAsientoOcupado = (asientoId: number) => {
       <small>Ocupado</small>
     </div>
 
+
     <div class="titulo-obra-reserva" v-if="obra">
       <h1>{{ obra.nombreObra }}</h1>
     </div>
+
+    
 
     <div class="container">
       <svg
@@ -89,11 +121,25 @@ const esAsientoOcupado = (asientoId: number) => {
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid meet"
       >
+        <!-- Escenario -->
+        <rect x="10" y="0" width="80" height="10" fill="#8B4513" />
+        <text
+          x="50"
+          y="5"
+          fill="white"
+          font-size="5"
+          text-anchor="middle"
+          alignment-baseline="middle"
+        >
+          Escenario
+        </text>
+
+        <!-- Asientos -->
         <g v-for="row in 6" :key="row">
           <g v-for="col in 9" :key="col">
             <rect
               :x="(col - 1) * 11"
-              :y="(row - 1) * 16 + 5"
+              :y="(row - 1) * 16 + 15"
               width="10"
               height="15"
               rx="2"
@@ -109,9 +155,9 @@ const esAsientoOcupado = (asientoId: number) => {
             />
             <line
               :x1="(col - 1) * 11 + 2"
-              :y1="(row - 1) * 16 + 5"
+              :y1="(row - 1) * 16 + 15"
               :x2="(col - 1) * 11 + 2"
-              :y2="(row - 1) * 16 + 20"
+              :y2="(row - 1) * 16 + 30"
               stroke-width="1"
               stroke="var(--dark-color)"
             />
@@ -120,13 +166,15 @@ const esAsientoOcupado = (asientoId: number) => {
       </svg>
     </div>
 
+    <h2>
+      Has seleccionado <span>{{ asientosSeleccionados.length }}</span> asiento(s) por un total de <span>{{ precioTotal }}</span> euros.
+    </h2>
+
     <button @click="reservarAsientosSeleccionados" class="reserve-button">
       Reservar Asientos
     </button>
 
-    <p class="text">
-      Has seleccionado <span>{{ asientosSeleccionados.length }}</span> asientos.
-    </p>
+  
   </div>
 </template>
 
@@ -146,7 +194,6 @@ const esAsientoOcupado = (asientoId: number) => {
   display: flex;
   margin-top: 20px;
 }
-
 
 .seat {
   background-color: var(--bg-color);
