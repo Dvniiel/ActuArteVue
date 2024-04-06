@@ -105,7 +105,7 @@ const downloadPdf = () => {
     v-if="reservas.length"
     @click="downloadPdf"
   >
-    Descargar como PDF
+    Descarga tus entradas
   </button>
 </template>
 
