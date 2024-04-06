@@ -16,61 +16,43 @@ const clearTickets = () => {
   reservas.value = [];
 };
 
-const downloadPdf = () => {
-  const doc = new jsPDF();
-  const pageWidth = doc.internal.pageSize.getWidth();
+const downloadPdf = async () => {
+  reservas.value.forEach(async (reserva, index) => {
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'mm',
+      format: [100, 120]
+    });
 
-  const getTextWidth = (text, fontSize, fontType) => {
-    doc.setFontSize(fontSize);
-    doc.setFont("helvetica", fontType);
-    return doc.getTextWidth(text);
-  };
+    doc.setFont('helvetica');
+    doc.setFontSize(12);
+    
+    const lines = [
+      `Obra: ${reserva.obra}`,
+      `Sesión: ${reserva.sesion}`,
+      `Número de asientos: ${reserva.numAsientos}`,
+      `Precio: ${reserva.precio} euros`,
+      `Fecha de reserva: ${new Date(reserva.fecha).toLocaleDateString()}`
+    ];
 
-  reservas.value.forEach((reserva, index) => {
-    const titleFontSize = 18;
-    const bodyFontSize = 12;
-    const title = `Obra: ${reserva.obra}`;
-    const titleWidth = getTextWidth(title, titleFontSize, "bold");
+    lines.forEach((line, i) => {
+      doc.text(line, 10, 20 + (i * 10));
+    });
 
-    const titleX = (pageWidth - titleWidth) / 2;
-    doc.setFontSize(titleFontSize);
-    doc.setFont("helvetica", "bold");
-    doc.text(title, titleX, 20);
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent('Reserva ID: ' + new Date().getTime())}`;
+    
+    try {
+      const response = await fetch(qrCodeUrl);
+      const blob = await response.blob();
+      const objectURL = URL.createObjectURL(blob);
+      
+      doc.addImage(objectURL, 'JPEG', 35, 60, 30, 30);
 
-    doc.setFontSize(bodyFontSize);
-
-    const sessionText = `Sesión: ${reserva.sesion}`;
-    const seatsText = `Número de asientos: ${reserva.numAsientos}`;
-    const priceText = `Precio: ${reserva.precio} euros`;
-    const dateText = `Fecha de reserva: ${new Date(
-      reserva.fecha
-    ).toLocaleDateString()}`;
-
-    const maxWidth = Math.max(
-      getTextWidth(sessionText, bodyFontSize, "normal"),
-      getTextWidth(seatsText, bodyFontSize, "normal"),
-      getTextWidth(priceText, bodyFontSize, "normal"),
-      getTextWidth(dateText, bodyFontSize, "normal")
-    );
-
-    const qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example";
-    const uniqueQrCodeUrl = `${qrCodeUrl}&uniqueId=${new Date().getTime()}`;
-
-    doc.addImage(uniqueQrCodeUrl, "JPEG", (pageWidth - 50) / 2, 70, 50, 50);
-
-    const textX = (pageWidth - maxWidth) / 2;
-
-    doc.text(sessionText, textX, 30);
-    doc.text(seatsText, textX, 40);
-    doc.text(priceText, textX, 50);
-    doc.text(dateText, textX, 60);
-
-    if (index < reservas.value.length - 1) {
-      doc.addPage();
+      doc.save(`reserva_${index + 1}.pdf`);
+    } catch (error) {
+      console.error('Error al cargar la imagen del código QR: ', error);
     }
   });
-
-  doc.save("reservas.pdf");
 };
 </script>
 
