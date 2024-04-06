@@ -98,11 +98,10 @@ onUnmounted(() => {
         </ul>
 
         <div class="header__main">
-            <!-- Mostrar nombre del usuario o link para registrarse/iniciar sesión -->
             <RouterLink v-if="userStore.isLoggedIn" to="/" class="header__nav-item">
                 <i class="ri-user-line"></i>{{ userStore.nombreUsuario }}
             </RouterLink>
-            <RouterLink v-else to="/login" class="header__nav-item">
+            <RouterLink v-else to="/register" class="header__nav-item">
                 <i class="ri-user-line"></i>Iniciar Sesión
             </RouterLink>
             <div class="bx bx-menu" id="menu-icon"></div>
