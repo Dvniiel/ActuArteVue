@@ -27,11 +27,9 @@ export const useLoginUserStore = defineStore("loginUser", {
         );
         this.usuario = response.data;
 
-        // Establece la información del usuario en UserStore
         const userStore = useUserStore();
         userStore.setUser(this.usuario);
 
-        // Redirige al usuario según si es administrador o no
         if (this.usuario.isAdmin) {
           router.push('/dashboard');
         } else {
@@ -44,7 +42,6 @@ export const useLoginUserStore = defineStore("loginUser", {
     },
 
     logoutUser() {
-      // Limpia la información del usuario y redirige a la página de inicio de sesión
       this.usuario = null;
       const userStore = useUserStore();
       userStore.clearUser();
@@ -52,7 +49,6 @@ export const useLoginUserStore = defineStore("loginUser", {
     },
 
     checkLoginStatus() {
-      // Verifica si hay datos de sesión guardados (puedes usar localStorage o cookies)
       const userData = localStorage.getItem('userData');
       if (userData) {
         this.usuario = JSON.parse(userData);
